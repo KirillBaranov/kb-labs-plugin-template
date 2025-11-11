@@ -1,0 +1,21 @@
+{
+  "extends": "@kb-labs/devkit/tsconfig/node.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@app/shared": ["src/shared/index.ts"],
+      "@app/shared/*": ["src/shared/*"],
+      "@app/domain": ["src/domain/index.ts"],
+      "@app/domain/*": ["src/domain/*"],
+      "@app/application": ["src/application/index.ts"],
+      "@app/application/*": ["src/application/*"],
+      "@app/infrastructure": ["src/infrastructure/index.ts"],
+      "@app/infrastructure/*": ["src/infrastructure/*"]
+    }
+  },
+  "include": ["src", "tests"],
+  "exclude": ["dist", "node_modules"],
+  "references": []
+}

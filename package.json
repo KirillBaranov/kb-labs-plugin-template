@@ -1,8 +1,8 @@
 {
-  "name": "@kb-labs/product-template",
+  "name": "@kb-labs/plugin-template",
   "version": "0.1.0",
   "private": true,
-  "description": "KB Labs product template — zero-config starter powered by @kb-labs/devkit.",
+  "description": "Reference plugin template for the KB Labs ecosystem with devkit-powered tooling.",
   "type": "module",
   "author": {
     "name": "Kirill Baranov",
@@ -11,12 +11,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kirill-baranov/kb-labs-product-template.git"
+    "url": "https://github.com/kirill-baranov/kb-labs-plugin-template.git"
   },
   "bugs": {
-    "url": "https://github.com/kirill-baranov/kb-labs-product-template/issues"
+    "url": "https://github.com/kirill-baranov/kb-labs-plugin-template/issues"
   },
-  "homepage": "https://github.com/kirill-baranov/kb-labs-product-template#readme",
+  "homepage": "https://github.com/kirill-baranov/kb-labs-plugin-template#readme",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -29,9 +29,9 @@
     "devkit:help": "node scripts/devkit-sync.mjs --help",
     "postinstall": "pnpm -s devkit:sync || true",
     "// ——— core": "────────────────────────────────────────",
-    "build": "pnpm -r run build",
-    "build:clean": "pnpm -r run clean && pnpm -r run build",
-    "dev": "pnpm -r --parallel run dev",
+    "build": "pnpm -r --filter ./packages/... run build",
+    "build:clean": "pnpm -r --filter ./packages/... run clean && pnpm run build",
+    "dev": "pnpm -r --parallel --filter ./packages/... run dev",
     "// ——— quality": "────────────────────────────────────────",
     "lint": "pnpm -r exec eslint .",
     "lint:fix": "pnpm -r exec eslint . --fix",
@@ -61,15 +61,12 @@
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
     "@vitest/coverage-v8": "^3",
-    "@vue/eslint-config-typescript": "^14.6.0",
     "eslint": "^9",
-    "eslint-plugin-vue": "^10.5.0",
     "prettier": "^3",
     "rimraf": "^6",
     "tsup": "^8",
     "typescript": "^5",
-    "vitest": "^3.2.4",
-    "@byjohann/toon": "*"
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=18.18.0",
