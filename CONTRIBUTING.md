@@ -1,90 +1,75 @@
 # Contributing Guide
 
-Thanks for considering a contribution to **KB Labs** projects!
+Thanks for helping grow the KB Labs plugin ecosystem!
 
 ---
 
-## Development setup
+## 🧰 Local development
 
 ```bash
-pnpm i
-pnpm dev
+pnpm install
+pnpm --filter @kb-labs/plugin-template-cli run build # optional warm-up
+pnpm --filter @kb-labs/plugin-template-cli test
 ```
 
-## 📋 Development Guidelines
+Handy scripts:
 
-### Code Style
+- `pnpm verify` – lint + type-check + test
+- `pnpm sandbox:cli|rest|studio` – run compiled artifacts in sandboxes
+- `pnpm devkit:sync` – align configs with `@kb-labs/devkit`
 
-- **Coding style**: Follow ESLint + Prettier rules. Run `pnpm lint` before pushing.
-- **TypeScript**: Use strict mode and proper type annotations.
-- **Testing**: Cover all changes with Vitest. Run `pnpm test`.
-- **Documentation**: Document all public APIs and complex logic.
+## 📐 Engineering guidelines
 
-### Commit Messages
+### Layering
 
-Use conventional commit format:
+- `shared` → `domain` → `application` → `cli/rest/studio`
+- Interface layers invoke application use-cases; keep them thin and deterministic.
+- Application orchestrates domain objects and depends on infrastructure adapters via interfaces.
+- Domain is pure (no fs/net/env access).
+
+### Code quality
+
+- Follow ESLint + Prettier (run `pnpm lint`).
+- TypeScript is strict; add explicit types at module boundaries.
+- Cover behaviour with Vitest (`packages/plugin-cli/tests/**`).
+- Update docs and manifest comments when changing contracts.
+
+### Manifest checklist
+
+1. Register new commands/routes/widgets in `src/manifest.v2.ts`.
+2. Declare permissions (fs/net/env/quotas) required by the feature.
+3. Add entries to `tsup.config.ts` so outputs are bundled with d.ts files.
+4. Provide tests, sandbox examples, and documentation updates.
+
+### Conventional commits
 
 ```
-feat: add new feature
-fix: correct bug
-docs: update documentation
-refactor: restructure code
-test: add or update tests
-chore: maintenance tasks
+feat: add greeting scheduler
+fix: correct hello schema
+docs: expand studio guide
+refactor: split use-case logic
+test: cover json output path
+chore: bump devkit
 ```
-
-### Architecture Decisions
-
-- For significant architectural changes, add an ADR in `docs/adr/`
-- Follow the ADR template in `docs/adr/0000-template.md`
-- Include required metadata (Date, Status, Deciders, **Last Reviewed**, **Tags**)
-- **Last Reviewed** date is required and should be updated periodically
-- **Tags** are mandatory (minimum 1, maximum 5 tags from approved list)
-- See [Documentation Standard](./docs/DOCUMENTATION.md) for ADR format requirements
-
-## DevKit Integration
-
-This project uses `@kb-labs/devkit` for shared tooling configurations. Key points:
-
-- **Configurations**: ESLint, Prettier, Vitest, TypeScript, and GitHub Actions are managed by devkit
-- **Local configs**: Act as thin wrappers over devkit configurations
-- **Updates**: When devkit is updated, run `pnpm install` to get the latest configurations
-- **Customization**: For project-specific rules, extend devkit configs rather than overriding them
-
-### DevKit Commands
-
-- `pnpm devkit:sync` - Sync DevKit configurations (runs automatically on install)
-- `pnpm devkit:check` - Check if sync is needed
-- `pnpm devkit:force` - Force sync (overwrites existing configs)
-- `pnpm devkit:help` - Show help and available options
-
-For more details, see [ADR-0005: Use DevKit for Shared Tooling](docs/adr/0005-use-devkit-for-shared-tooling.md).
 
 ---
 
-## 🔄 Pull Request Process
+## 🔄 Pull request workflow
 
-### Before Submitting
+Before opening a PR:
 
-1. **Fork** the repository and create a feature branch
-2. **Make your changes** following the guidelines above
-3. **Test thoroughly**:
-   ```bash
-   pnpm check  # Runs lint + type-check + tests
-   ```
-4. **Update documentation** if needed (README, API docs, ADRs)
-5. **Submit a PR** with:
-   - Clear description of changes
-   - Reference any related issues
-   - Ensure all CI checks pass
+1. Branch off `main`.
+2. Implement the change following layering + manifest guidelines.
+3. Run `pnpm verify`.
+4. Update docs (`README`, guides, ADRs) and sandbox scripts as needed.
+5. Provide CLI transcripts or screenshots when appropriate.
 
-### PR Requirements
+PR requirements:
 
-- Clear, descriptive title and description
-- Reference any related issues
-- Ensure all CI checks pass
-- Request review from maintainers
+- Include tests proving behaviour (CLI/REST/Studio as applicable).
+- Reference related issues or ADRs.
+- Ensure CI is green and request maintainer review.
 
 ---
 
-**See [Documentation Standard](./docs/DOCUMENTATION.md) for complete documentation guidelines.**
+Documentation standards live in [`docs/DOCUMENTATION.md`](./docs/DOCUMENTATION.md). Capture major structural decisions with [`docs/adr/0000-template.md`](./docs/adr/0000-template.md).
