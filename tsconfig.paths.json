@@ -118,10 +118,10 @@
         "../kb-labs-cli/packages/commands/src/*"
       ],
       "@kb-labs/cli-core": [
-        "../kb-labs-cli/packages/core/src/index.ts"
+        "../kb-labs-cli/packages/cli-core/src/index.ts"
       ],
       "@kb-labs/cli-core/*": [
-        "../kb-labs-cli/packages/core/src/*"
+        "../kb-labs-cli/packages/cli-core/src/*"
       ],
       "@kb-labs/cli-runtime": [
         "../kb-labs-cli/packages/cli-runtime/src/index.ts"
@@ -206,6 +206,12 @@
       ],
       "@kb-labs/mind-cli/*": [
         "../kb-labs-mind/packages/mind-cli/src/*"
+      ],
+      "@kb-labs/mind-contracts": [
+        "../kb-labs-mind/packages/contracts/src/index.ts"
+      ],
+      "@kb-labs/mind-contracts/*": [
+        "../kb-labs-mind/packages/contracts/src/*"
       ],
       "@kb-labs/mind-core": [
         "../kb-labs-mind/packages/mind-core/src/index.ts"

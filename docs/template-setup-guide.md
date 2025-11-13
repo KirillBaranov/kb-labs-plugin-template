@@ -70,6 +70,12 @@ pnpm --filter @kb-labs/my-awesome-plugin lint
 - Add CI workflows or package publishing scripts.
 - Introduce additional packages under `packages/` if your plugin is split into multiple deployable pieces.
 
+## 8. Keep DevKit up to date
+
+- Bump `@kb-labs/devkit` versions in the root and package `package.json` files when a new release is published.
+- Run `pnpm install` followed by `pnpm devkit:sync` (or `pnpm devkit:force` for a clean overwrite).
+- Review and commit the updated lint/tsconfig/tooling files alongside the version bump.
+
 ## Reference: Where identifiers live
 
 | Identifier | Purpose | Location |
@@ -81,4 +87,7 @@ pnpm --filter @kb-labs/my-awesome-plugin lint
 | `template.hello.greeting` | Artifact ID example | `contract.ts`, CLI/REST logging/tests |
 
 Review this table whenever you rename IDs to ensure consistency across contracts, manifest, implementation, and tests.
+
+- Update `tsconfig.paths.json` by running `pnpm devkit:paths` after renaming packages so the workspace aliases point to the new paths (TypeScript uses it to resolve `@kb-labs/...` imports across repos).
+- Keep documentation and README snippets consistent with the new naming, so future contributors immediately understand your plugin surface.
 

@@ -16,6 +16,17 @@ If you just copied this template, read [Template Setup Guide](./docs/template-se
 
 > `pnpm install` runs DevKit sync automatically. Expect config diffs (tsconfig, eslint, etc.) on the first run — commit them with your scaffold.
 
+## 🔄 Staying current with DevKit
+
+To migrate an existing plugin to the latest DevKit standards:
+1. Bump the `@kb-labs/devkit` version in `package.json` (root and any package-specific `package.json` files).
+2. Run `pnpm install` to update lockfiles.
+3. Execute `pnpm devkit:paths` to regenerate `tsconfig.paths.json` so cross-repo aliases stay in sync.
+4. Execute `pnpm devkit:sync` to apply the new presets. Use `pnpm devkit:force` if you need to overwrite local tweaks.
+5. Review the generated diffs (eslint/tsconfig/vitest/tsup adjustments) and commit them together with the version bump.
+
+These commands keep linting, TypeScript, and tooling configuration aligned across the ecosystem. Regenerating `tsconfig.paths.json` ensures TypeScript can resolve the `@kb-labs/...` aliases that point to neighbouring repositories in the mono-repo workspace.
+
 ## 🎯 What this template provides
 
 - Devkit-powered configs (ESLint, TS, Vitest, TSUP) ready to use
@@ -39,7 +50,7 @@ If you just copied this template, read [Template Setup Guide](./docs/template-se
 ├─────────────┤
 │ application │ ← use-cases orchestrating domain
 ├─────────────┤
-│ infrastructure │ ← adapters (logger, fs, etc.)
+│ infra       │ ← adapters (logger, fs, etc.)
 ├─────────────┤
 │ cli / rest / studio │ ← interface layers calling application logic
 └─────────────┘

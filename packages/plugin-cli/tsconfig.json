@@ -10,8 +10,8 @@
       "@app/domain/*": ["src/domain/*"],
       "@app/application": ["src/application/index.ts"],
       "@app/application/*": ["src/application/*"],
-      "@app/infrastructure": ["src/infrastructure/index.ts"],
-      "@app/infrastructure/*": ["src/infrastructure/*"]
+      "@app/infra": ["src/infra/index.ts"],
+      "@app/infra/*": ["src/infra/*"]
     }
   },
   "include": ["src", "tests"],

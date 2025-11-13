@@ -1,6 +1,6 @@
 import { pluginContractsManifest } from '@kb-labs/plugin-template-contracts';
 import { createGreetingUseCase } from '../../../application/index.js';
-import { createConsoleLogger, type Logger } from '../../../infrastructure/index.js';
+import { createConsoleLogger, type Logger } from '../../../infra/index.js';
 
 const HELLO_GREETING_ARTIFACT_ID =
   pluginContractsManifest.artifacts['template.hello.greeting']?.id ?? 'template.hello.greeting';
