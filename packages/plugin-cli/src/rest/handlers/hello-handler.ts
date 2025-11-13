@@ -1,6 +1,10 @@
-import { createGreetingUseCase } from '@app/application';
+import { pluginContractsManifest } from '@kb-labs/plugin-template-contracts';
+import { createGreetingUseCase } from '../../application/index.js';
 import type { HelloRequest } from '../schemas/hello-schema.js';
 import { HelloRequestSchema, HelloResponseSchema } from '../schemas/hello-schema.js';
+
+const HELLO_GREETING_ARTIFACT_ID =
+  pluginContractsManifest.artifacts['template.hello.greeting']?.id ?? 'template.hello.greeting';
 
 interface HandlerContext {
   requestId?: string;
@@ -16,7 +20,8 @@ export async function handleHello(input: unknown, ctx: HandlerContext = {}) {
 
   ctx.runtime?.log?.('info', 'Hello REST endpoint executed', {
     requestId: ctx.requestId,
-    target: greeting.target
+    target: greeting.target,
+    produces: [HELLO_GREETING_ARTIFACT_ID]
   });
 
   const response = { message: greeting.message, target: greeting.target };

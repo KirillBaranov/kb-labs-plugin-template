@@ -1,5 +1,5 @@
-import { createGreeting } from '@app/domain';
-import { DEFAULT_GREETING_TARGET } from '@app/shared';
+import { createGreeting } from '../../domain/index.js';
+import { DEFAULT_GREETING_TARGET } from '../../shared/index.js';
 
 export interface CreateGreetingInput {
   name?: string;

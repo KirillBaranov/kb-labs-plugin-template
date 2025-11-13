@@ -1,5 +1,9 @@
-import { createGreetingUseCase } from '@app/application';
-import { createConsoleLogger, type Logger } from '@app/infrastructure';
+import { pluginContractsManifest } from '@kb-labs/plugin-template-contracts';
+import { createGreetingUseCase } from '../../../application/index.js';
+import { createConsoleLogger, type Logger } from '../../../infrastructure/index.js';
+
+const HELLO_GREETING_ARTIFACT_ID =
+  pluginContractsManifest.artifacts['template.hello.greeting']?.id ?? 'template.hello.greeting';
 
 export interface HelloCommandArgs {
   name?: string;
@@ -35,7 +39,11 @@ export async function runHelloCommand(
     stdout.write(`${payload.message}\n`);
   }
 
-  logger.log('info', 'Hello command executed', { target: payload.target, json: Boolean(args.json) });
+  logger.log('info', 'Hello command executed', {
+    target: payload.target,
+    json: Boolean(args.json),
+    produces: [HELLO_GREETING_ARTIFACT_ID]
+  });
   return payload;
 }
 

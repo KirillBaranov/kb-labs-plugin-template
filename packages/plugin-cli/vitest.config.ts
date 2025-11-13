@@ -5,6 +5,7 @@ const sharedDir = new URL('./src/shared/', import.meta.url).pathname;
 const domainDir = new URL('./src/domain/', import.meta.url).pathname;
 const applicationDir = new URL('./src/application/', import.meta.url).pathname;
 const infrastructureDir = new URL('./src/infrastructure/', import.meta.url).pathname;
+const contractsDir = new URL('../contracts/src/', import.meta.url).pathname;
 
 export default defineConfig({
   ...baseConfig,
@@ -17,6 +18,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      '@kb-labs/plugin-template-contracts': contractsDir + 'index.ts',
+      '@kb-labs/plugin-template-contracts/*': contractsDir + '*',
       '@app/shared': sharedDir + 'index.ts',
       '@app/shared/*': sharedDir + '*',
       '@app/domain': domainDir + 'index.ts',

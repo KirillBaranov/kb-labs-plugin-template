@@ -10,7 +10,8 @@ describe('handleHello', () => {
     expect(response).toEqual({ message: 'Hello, API!', target: 'API' });
     expect(log).toHaveBeenCalledWith('info', 'Hello REST endpoint executed', {
       requestId: undefined,
-      target: 'API'
+      target: 'API',
+      produces: ['template.hello.greeting']
     });
   });
 
