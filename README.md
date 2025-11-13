@@ -6,6 +6,16 @@
 [![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org/)
 [![pnpm](https://img.shields.io/badge/pnpm-9+-orange.svg)](https://pnpm.io/)
 
+## 🧭 Start here
+
+If you just copied this template, read [Template Setup Guide](./docs/template-setup-guide.md) for a step-by-step walkthrough:
+- rename the plugin IDs and packages
+- decide which surfaces (CLI/REST/Studio) you want to keep
+- align runtime code with the new contracts package
+- run build/test/type-check pipelines safely
+
+> `pnpm install` runs DevKit sync automatically. Expect config diffs (tsconfig, eslint, etc.) on the first run — commit them with your scaffold.
+
 ## 🎯 What this template provides
 
 - Devkit-powered configs (ESLint, TS, Vitest, TSUP) ready to use
@@ -13,6 +23,38 @@
 - HelloWorld example spanning CLI command, REST route, and Studio widget
 - Sandbox scripts for exercising compiled artifacts locally
 - Contributor docs that explain how to extend each surface
+- Lightweight `contracts` package that documents artifacts/commands/workflows and is safe to consume from other products
+
+## 🗺️ Architecture map
+
+```
+┌─────────────┐
+│ contracts   │  ← public promises (artifacts, commands, workflows, API)
+└─────┬───────┘
+      │ imports
+┌─────▼───────┐    ┌───────────┐
+│ shared      │    │ manifest  │
+├─────────────┤    └───────────┘
+│ domain      │ ← pure entities & value objects
+├─────────────┤
+│ application │ ← use-cases orchestrating domain
+├─────────────┤
+│ infrastructure │ ← adapters (logger, fs, etc.)
+├─────────────┤
+│ cli / rest / studio │ ← interface layers calling application logic
+└─────────────┘
+```
+
+Use `docs/architecture.md` for full layering rules.
+
+## 🔌 Choose your surfaces
+
+The template enables CLI, REST, and Studio simultaneously. To build a lighter plugin:
+- Keep only the directories you need (`src/cli`, `src/rest`, `src/studio`).
+- Remove unneeded sections from `manifest.v2.ts` and the contracts manifest.
+- Delete matching tests and sandbox scripts you no longer use.
+
+The [Template Setup Guide](./docs/template-setup-guide.md) lists the exact files to touch for each surface.
 
 ## 🚀 Quick start
 
@@ -90,6 +132,7 @@ Devkit helpers: `pnpm devkit:sync`, `pnpm devkit:check`, `pnpm devkit:force`, `p
 
 - [`docs/overview.md`](./docs/overview.md) – why the template exists
 - [`docs/getting-started.md`](./docs/getting-started.md) – setup & sandbox walkthrough
+- [`docs/template-setup-guide.md`](./docs/template-setup-guide.md) – turning the template into your own plugin
 - [`docs/cli-guide.md`](./docs/cli-guide.md) – adding CLI commands
 - [`docs/rest-guide.md`](./docs/rest-guide.md) – creating REST routes
 - [`docs/studio-guide.md`](./docs/studio-guide.md) – wiring Studio widgets
