@@ -87,6 +87,27 @@ pnpm --filter @kb-labs/plugin-template-cli test
 
 To run sandboxes, see the root `README.md` (`pnpm sandbox:cli`, `sandbox:rest`, `sandbox:studio`).
 
+## Command Implementation
+
+This template demonstrates **three different approaches** to implementing CLI commands:
+
+1. **High-level wrapper (`defineCommand`)** - Recommended for most cases
+2. **Low-level atomic tools** - For maximum control
+3. **Hybrid approach** - Combining both
+
+See [`COMMAND_IMPLEMENTATION_GUIDE.md`](./COMMAND_IMPLEMENTATION_GUIDE.md) for detailed explanations and examples.
+
+### Quick Start
+
+The `template:hello` command in `src/cli/commands/hello/run.ts` shows all three approaches with working code examples. The default implementation uses Approach 1 (`defineCommand`), which provides:
+
+- ✅ Zero-boilerplate flag validation
+- ✅ Automatic analytics integration
+- ✅ Structured logging
+- ✅ Error handling
+- ✅ Timing tracking
+- ✅ JSON output mode
+
 ## Customising for Your Plugin
 
 When using this as a starting point:
@@ -94,5 +115,6 @@ When using this as a starting point:
 - Rename the package in `package.json` (e.g. `@kb-labs/my-plugin-cli`)
 - Update manifest IDs and the contracts package
 - Replace the Hello flow with your own domain, use-cases, and surfaces
+- Choose the command implementation approach that fits your needs (see `COMMAND_IMPLEMENTATION_GUIDE.md`)
 
 

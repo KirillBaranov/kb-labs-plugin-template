@@ -42,6 +42,9 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@kb-labs/cli-command-kit": "workspace:*",
+    "@kb-labs/cli-core": "link:../../../kb-labs-cli/packages/core",
+    "@kb-labs/core-sys": "link:../../../kb-labs-core/packages/sys",
     "@kb-labs/setup-operations": "link:../../../kb-labs-setup-engine/packages/setup-operations",
     "@kb-labs/plugin-manifest": "link:../../../kb-labs-plugin/packages/manifest",
     "@kb-labs/plugin-template-contracts": "link:../contracts",
