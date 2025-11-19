@@ -9,6 +9,26 @@ export const manifest: ManifestV2 = {
     description: 'HelloWorld reference plugin demonstrating CLI, REST, and Studio surfaces.',
     tags: ['template', 'hello', 'sample']
   },
+  setup: {
+    handler: './setup/handler.js#run',
+    describe: 'Create starter .kb assets and default config for the template plugin.',
+    permissions: {
+      fs: {
+        mode: 'readWrite',
+        allow: ['.kb/template/**', '.gitignore'],
+        deny: ['.kb/plugins.json', '.kb/kb-labs.config.json', '.kb/cache/**']
+      },
+      net: 'none',
+      env: {
+        allow: []
+      },
+      quotas: {
+        timeoutMs: 5000,
+        memoryMb: 64,
+        cpuMs: 2500
+      }
+    }
+  },
   cli: {
     commands: [
       {

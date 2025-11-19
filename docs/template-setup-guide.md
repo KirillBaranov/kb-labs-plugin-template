@@ -33,6 +33,18 @@ The template enables CLI, REST, and Studio out of the box. Keep only what you ne
 
 Update `pluginContractsManifest` accordingly. Each missing surface can omit its section (`commands`, `workflows`, `api`) entirely.
 
+### Optional: run the sample setup command
+
+The manifest ships with a sandboxed `setup` handler so you can see how plugins provision `.kb/` assets. Try it once the repo is installed:
+
+```bash
+pnpm kb template:setup      # creates .kb/template assets + default config
+pnpm kb template:setup --dry-run
+pnpm kb template:setup --force
+```
+
+After you rename the plugin, update the setup handler (`src/setup/handler.ts`) to write the files and defaults your product needs. Adjust `manifest.v2.ts#setup.permissions` to match the new filesystem scope.
+
 ## 3. Define your contracts
 
 1. Edit `packages/contracts/src/contract.ts` to describe real artifacts (files, logs, JSON payloads).

@@ -3,9 +3,11 @@ import nodePreset from '@kb-labs/devkit/tsup/node.js';
 
 export default defineConfig({
   ...nodePreset,
+  tsconfig: "tsconfig.build.json", // Use build-specific tsconfig without paths
   entry: [
     'src/index.ts',
     'src/manifest.v2.ts',
+    'src/setup/handler.ts',
     'src/cli/commands/hello/run.ts',
     'src/rest/handlers/hello-handler.ts',
     'src/rest/schemas/hello-schema.ts',
