@@ -5,6 +5,12 @@ type SetupInput = {
 };
 
 type SetupContext = {
+  logger?: {
+    debug: (msg: string, meta?: Record<string, unknown>) => void;
+    info: (msg: string, meta?: Record<string, unknown>) => void;
+    warn: (msg: string, meta?: Record<string, unknown>) => void;
+    error: (msg: string, meta?: Record<string, unknown>) => void;
+  };
   runtime?: {
     fs?: {
       mkdir(path: string, options?: { recursive?: boolean }): Promise<void>;
@@ -14,11 +20,6 @@ type SetupContext = {
         options?: { encoding?: BufferEncoding },
       ): Promise<void>;
     };
-    log?: (
-      level: 'debug' | 'info' | 'warn' | 'error',
-      message: string,
-      meta?: Record<string, unknown>,
-    ) => void;
     config?: {
       ensureSection?: (
         pointer: string,
@@ -35,7 +36,7 @@ const CONFIG_PATH = `${TEMPLATE_DIR}/hello-config.json`;
 const README_HINT = `${TEMPLATE_DIR}/README.md`;
 
 export async function run(input: SetupInput = {}, ctx: SetupContext = {}) {
-  const logger = ctx.runtime?.log;
+  const logger = ctx.logger;
   const fs = ctx.runtime?.fs;
 
   const configPayload = {
@@ -78,10 +79,9 @@ export async function run(input: SetupInput = {}, ctx: SetupContext = {}) {
 
     await fs.mkdir(TEMPLATE_DIR, { recursive: true });
     await fs.writeFile(README_HINT, `${readmeContent}\n`);
-    logger?.('info', 'README hints created via imperative fs API.');
+    logger?.info('README hints created via imperative fs API.');
   } else {
-    logger?.(
-      'warn',
+    logger?.warn(
       'ctx.runtime.fs is unavailable. README hints will not be created imperatively.',
     );
   }
@@ -92,7 +92,7 @@ export async function run(input: SetupInput = {}, ctx: SetupContext = {}) {
     force: input.force === true,
   });
 
-  logger?.('info', 'Template setup populated .kb/template assets.', {
+  logger?.info('Template setup populated .kb/template assets.', {
     dryRun: ctx.dryRun === true,
     force: input.force === true,
   });

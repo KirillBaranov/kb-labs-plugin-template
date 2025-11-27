@@ -11,13 +11,19 @@
  * See COMMAND_IMPLEMENTATION_GUIDE.md for detailed explanations.
  */
 
-import { pluginContractsManifest } from '@kb-labs/plugin-template-contracts';
+import {
+  pluginContractsManifest,
+  type PluginCommandIds,
+  type PluginArtifactIds,
+  getArtifactId,
+  getCommandId,
+} from '@kb-labs/plugin-template-contracts';
 import { createGreetingUseCase } from '../../../application/index.js';
 import { createConsoleLogger, type Logger } from '../../../infra/index.js';
 import type { CliContext } from '@kb-labs/cli-core';
 
-const HELLO_GREETING_ARTIFACT_ID =
-  pluginContractsManifest.artifacts['template.hello.greeting']?.id ?? 'template.hello.greeting';
+// Level 2+: Типизированные artifact ID через contracts
+const HELLO_GREETING_ARTIFACT_ID = getArtifactId('template.hello.greeting');
 
 export interface HelloCommandArgs {
   name?: string;
@@ -157,31 +163,16 @@ export const run = defineCommand<TemplateHelloFlags>({
 // Pros: Maximum type safety, flags AND result types enforced
 // Cons: More boilerplate, but worth it for maintainability
 
-import { defineCommand, type CommandResult } from '@kb-labs/cli-command-kit';
-
-type TemplateHelloFlags = {
-  name: { type: 'string'; description?: string; alias?: string };
-  json: { type: 'boolean'; description?: string; default?: boolean };
-};
+import { defineCommand, type CommandResult, type InferFlags } from '@kb-labs/cli-command-kit';
+import { templateHelloFlags, type TemplateHelloFlags } from './flags.js';
 
 type TemplateHelloResult = CommandResult & {
   result?: HelloCommandResult;
 };
 
 export const run = defineCommand<TemplateHelloFlags, TemplateHelloResult>({
-  name: 'template:hello',
-  flags: {
-    name: {
-      type: 'string',
-      description: 'Name to greet.',
-      alias: 'n',
-    },
-    json: {
-      type: 'boolean',
-      description: 'Emit JSON payload instead of formatted text.',
-      default: false,
-    },
-  },
+  name: getCommandId('template:hello'), // Level 2+: Проверка command ID против contracts
+  flags: templateHelloFlags, // Level 2.3+: Переиспользование типов из flags.ts
   async handler(ctx, argv, flags) {
     // Full type safety:
     // - flags.name is string | undefined (autocomplete works!)

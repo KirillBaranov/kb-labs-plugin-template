@@ -1,24 +1,37 @@
-import { pluginContractsManifest } from '@kb-labs/plugin-template-contracts';
+import {
+  getArtifactId,
+  type PluginArtifactIds,
+} from '@kb-labs/plugin-template-contracts';
+import type { PluginContext } from '@kb-labs/plugin-manifest';
 import { createGreetingUseCase } from '../../application/index.js';
 import type { HelloRequest } from '../schemas/hello-schema.js';
 import { HelloRequestSchema, HelloResponseSchema } from '../schemas/hello-schema.js';
+import type { TypedPluginContext } from './context.js';
 
-const HELLO_GREETING_ARTIFACT_ID =
-  pluginContractsManifest.artifacts['template.hello.greeting']?.id ?? 'template.hello.greeting';
+// Level 2+: Типизированный artifact ID через contracts
+const HELLO_GREETING_ARTIFACT_ID = getArtifactId('template.hello.greeting');
 
-interface HandlerContext {
-  requestId?: string;
-  runtime?: {
-    log?: (level: 'debug' | 'info' | 'warn' | 'error', message: string, meta?: Record<string, unknown>) => void;
-  };
-}
-
-export async function handleHello(input: unknown, ctx: HandlerContext = {}) {
+/**
+ * Hello REST handler with typed context
+ * 
+ * @example
+ * // Level 3+: Типизированный handler
+ * export async function handleHello(
+ *   input: unknown,
+ *   ctx: TypedPluginContext
+ * ): Promise<HelloResponse> {
+ *   // ctx.artifacts.write() принимает только валидные artifact IDs
+ * }
+ */
+export async function handleHello(
+  input: unknown,
+  ctx: PluginContext | TypedPluginContext = {} as PluginContext
+) {
   const parsed = HelloRequestSchema.parse((input ?? {}) as Partial<HelloRequest>);
 
   const greeting = createGreetingUseCase({ name: parsed.name });
 
-  ctx.runtime?.log?.('info', 'Hello REST endpoint executed', {
+  ctx.logger?.info('Hello REST endpoint executed', {
     requestId: ctx.requestId,
     target: greeting.target,
     produces: [HELLO_GREETING_ARTIFACT_ID]
