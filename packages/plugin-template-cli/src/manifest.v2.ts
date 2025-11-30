@@ -1,5 +1,5 @@
 import { createManifestV2, defineCommandFlags } from '@kb-labs/plugin-manifest';
-import { pluginContractsManifest } from '@kb-labs/plugin-template-contracts';
+import { pluginContractsManifest } from 'packages/plugin-contracts/src/index.js';
 import { templateHelloFlags } from './cli/commands/flags.js';
 
 // Level 2: Типизация через contracts для автодополнения и проверки ID

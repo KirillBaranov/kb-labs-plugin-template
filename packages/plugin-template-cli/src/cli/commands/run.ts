@@ -17,7 +17,7 @@ import {
   type PluginArtifactIds,
   getArtifactId,
   getCommandId,
-} from '@kb-labs/plugin-template-contracts';
+} from 'packages/plugins-contracts/src/index.js';
 import { createGreetingUseCase } from '../../core/index.js';
 import { createConsoleLogger, type Logger } from '../../utils/index.js';
 import type { CliContext } from '@kb-labs/cli-core';

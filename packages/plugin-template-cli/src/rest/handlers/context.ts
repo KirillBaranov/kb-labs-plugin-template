@@ -4,7 +4,7 @@
  */
 
 import type { PluginContext } from '@kb-labs/plugin-manifest';
-import type { PluginArtifactIds } from '@kb-labs/plugin-template-contracts';
+import type { PluginArtifactIds } from 'packages/plugins-contracts/src';
 
 /**
  * Typed PluginContext with artifact ID validation
