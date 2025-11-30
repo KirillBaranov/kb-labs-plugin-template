@@ -3,7 +3,7 @@ import {
   type PluginArtifactIds,
 } from '@kb-labs/plugin-template-contracts';
 import { definePluginHandler } from '@kb-labs/plugin-runtime';
-import { createGreetingUseCase } from '../../core/index.js';
+import { createGreetingUseCase } from '../../application/index.js';
 import type { HelloRequest } from '../schemas/hello-schema.js';
 import { HelloRequestSchema, HelloResponseSchema } from '../schemas/hello-schema.js';
 

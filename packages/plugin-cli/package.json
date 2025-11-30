@@ -1,9 +1,9 @@
 {
-  "name": "@kb-labs/plugin-template-cli",
+  "name": "@kb-labs/plugin-template-plugin",
   "version": "0.1.0",
   "type": "module",
   "private": true,
-  "description": "Reference CLI package for KB Labs plugin template with manifest, CLI, REST, and Studio layers.",
+  "description": "Reference plugin package for KB Labs plugin template with manifest, CLI, REST, and Studio layers.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -15,6 +15,11 @@
       "import": "./dist/manifest.v2.js",
       "types": "./dist/manifest.v2.d.ts"
     },
+    "./cli": "./dist/cli/index.js",
+    "./rest": "./dist/rest/index.js",
+    "./studio": "./dist/studio/index.js",
+    "./core": "./dist/core/index.js",
+    "./utils": "./dist/utils/index.js",
     "./studio/widgets/hello": {
       "import": "./dist/studio/widgets/hello-widget.js",
       "types": "./dist/studio/widgets/hello-widget.d.ts"
@@ -31,7 +36,7 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "pretype-check": "pnpm --filter @kb-labs/plugin-template-cli build",
+    "pretype-check": "pnpm --filter @kb-labs/plugin-template-plugin build",
     "clean": "rimraf dist",
     "build": "tsup --config tsup.config.ts",
     "dev": "tsup --config tsup.config.ts --watch",
@@ -47,6 +52,7 @@
     "@kb-labs/core-sys": "link:../../../kb-labs-core/packages/sys",
     "@kb-labs/setup-operations": "link:../../../kb-labs-setup-engine/packages/setup-operations",
     "@kb-labs/plugin-manifest": "link:../../../kb-labs-plugin/packages/manifest",
+    "@kb-labs/plugin-runtime": "link:../../../kb-labs-plugin/packages/runtime",
     "@kb-labs/plugin-template-contracts": "link:../contracts",
     "@kb-labs/shared-cli-ui": "link:../../../kb-labs-shared/packages/cli-ui",
     "react": "^18.3.0",
