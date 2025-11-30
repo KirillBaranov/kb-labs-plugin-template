@@ -7,8 +7,8 @@ export default defineConfig({
   entry: [
     'src/index.ts',
     'src/manifest.v2.ts',
-    'src/setup/handler.ts',
-    'src/cli/commands/hello/run.ts',
+    'src/lifecycle/setup.ts',
+    'src/cli/commands/run.ts',
     'src/rest/handlers/hello-handler.ts',
     'src/rest/schemas/hello-schema.ts',
     'src/studio/widgets/hello-widget.tsx'

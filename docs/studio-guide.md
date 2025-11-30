@@ -103,6 +103,9 @@ studio: {
           routeId: '/your-endpoint',
           method: 'POST',
           body: { filter: 'active' } // Optional request body
+        },
+        schema: {
+          zod: './rest/schemas/your-schema.js#YourResponseSchema'
         }
       },
       layoutHint: {
@@ -183,6 +186,9 @@ Widgets can get data from multiple sources:
       params: {
         period: '7d'
       }
+    },
+    schema: {
+      zod: './rest/schemas/metrics-schema.js#MetricsResponseSchema'
     }
   }
 }

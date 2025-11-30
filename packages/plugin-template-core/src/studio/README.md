@@ -77,6 +77,9 @@ studio: {
           type: 'rest',
           routeId: '/your-endpoint',  // Fetch from REST API
           method: 'GET'
+        },
+        schema: {
+          zod: './rest/schemas/your-schema.js#YourResponseSchema'
         }
       },
       layoutHint: {
@@ -212,6 +215,9 @@ Widgets can get data from multiple sources:
       params: {
         period: '7d'
       }
+    },
+    schema: {
+      zod: './rest/schemas/metrics-schema.js#MetricsResponseSchema'
     }
   }
 }

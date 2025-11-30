@@ -169,7 +169,7 @@
         "../kb-labs-core/packages/bundle/src/*"
       ],
       "@kb-labs/core-cli": [
-        "../kb-labs-core/packages/cli-core/src/index.ts"
+        "../kb-labs-core/packages/cli/src/index.ts"
       ],
       "@kb-labs/core-cli-adapters": [
         "../kb-labs-core/packages/cli-adapters/src/index.ts"
@@ -178,7 +178,7 @@
         "../kb-labs-core/packages/cli-adapters/src/*"
       ],
       "@kb-labs/core-cli/*": [
-        "../kb-labs-core/packages/cli-core/src/*"
+        "../kb-labs-core/packages/cli/src/*"
       ],
       "@kb-labs/core-config": [
         "../kb-labs-core/packages/config/src/index.ts"
@@ -232,16 +232,16 @@
         "../kb-labs-studio/packages/data-client/src/*"
       ],
       "@kb-labs/devlink-contracts": [
-        "../kb-labs-devlink/packages/contracts/src/index.ts"
+        "../kb-labs-devlink/packages/devlink-contracts/src/index.ts"
       ],
       "@kb-labs/devlink-contracts/*": [
-        "../kb-labs-devlink/packages/contracts/src/*"
+        "../kb-labs-devlink/packages/devlink-contracts/src/*"
       ],
       "@kb-labs/devlink-core": [
-        "../kb-labs-devlink/packages/core/src/index.ts"
+        "../kb-labs-devlink/packages/devlink-core/src/index.ts"
       ],
       "@kb-labs/devlink-core/*": [
-        "../kb-labs-devlink/packages/core/src/*"
+        "../kb-labs-devlink/packages/devlink-core/src/*"
       ],
       "@kb-labs/knowledge-contracts": [
         "../kb-labs-knowledge/packages/knowledge-contracts/src/index.ts"
@@ -274,10 +274,10 @@
         "../kb-labs-mind/packages/mind-cli/src/*"
       ],
       "@kb-labs/mind-contracts": [
-        "../kb-labs-mind/packages/contracts/src/index.ts"
+        "../kb-labs-mind/packages/mind-contracts/src/index.ts"
       ],
       "@kb-labs/mind-contracts/*": [
-        "../kb-labs-mind/packages/contracts/src/*"
+        "../kb-labs-mind/packages/mind-contracts/src/*"
       ],
       "@kb-labs/mind-core": [
         "../kb-labs-mind/packages/mind-core/src/index.ts"
@@ -393,17 +393,17 @@
       "@kb-labs/plugin-runtime/*": [
         "../kb-labs-plugin/packages/runtime/src/*"
       ],
-      "@kb-labs/plugin-template-cli": [
-        "packages/plugin-cli/src/index.ts"
-      ],
-      "@kb-labs/plugin-template-cli/*": [
-        "packages/plugin-cli/src/*"
-      ],
       "@kb-labs/plugin-template-contracts": [
-        "packages/contracts/src/index.ts"
+        "packages/plugin-template-contracts/src/index.ts"
       ],
       "@kb-labs/plugin-template-contracts/*": [
-        "packages/contracts/src/*"
+        "packages/plugin-template-contracts/src/*"
+      ],
+      "@kb-labs/plugin-template-core": [
+        "packages/plugin-template-core/src/index.ts"
+      ],
+      "@kb-labs/plugin-template-core/*": [
+        "packages/plugin-template-core/src/*"
       ],
       "@kb-labs/plugin-testing": [
         "../kb-labs-plugin/packages/testing/src/index.ts"

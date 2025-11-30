@@ -170,6 +170,9 @@ export default {
             type: 'rest',
             routeId: RouteIds.HELLO,  // Type-safe reference!
             method: 'POST'
+          },
+          schema: {
+            zod: './rest/schemas/hello-schema.js#HelloResponseSchema'
           }
         }
       }

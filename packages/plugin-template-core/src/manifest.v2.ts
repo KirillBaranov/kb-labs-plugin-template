@@ -1,5 +1,5 @@
 import { createManifestV2, defineCommandFlags, generateExamples } from '@kb-labs/plugin-manifest';
-import { pluginContractsManifest } from '../../plugin-template-contracts/src/index.js';
+import { pluginContractsManifest } from '../../plugin-template-contracts/dist/index.js';
 import { templateHelloFlags } from './cli/commands/flags.js';
 
 // Level 2: Типизация через contracts для автодополнения и проверки ID
@@ -35,12 +35,12 @@ export const manifest = createManifestV2<typeof pluginContractsManifest>({
   cli: {
     commands: [
       {
-        id: 'template:hello',
-        group: 'template',
+        id: 'plugin-template:hello',
+        group: 'plugin-template',
         describe: 'Print a hello message from the plugin template.',
         longDescription: 'Outputs a scoped greeting and optional target using shared formatting utilities.',
         flags: defineCommandFlags(templateHelloFlags), // Level 2.3+: Переиспользование типов из команды
-        examples: generateExamples('hello', 'template', [
+        examples: generateExamples('hello', 'plugin-template', [
           { description: 'Basic greeting', flags: {} },
           { description: 'Greet specific name', flags: { name: 'Dev' } },
           { description: 'Output as JSON', flags: { json: true } }
@@ -94,6 +94,9 @@ export const manifest = createManifestV2<typeof pluginContractsManifest>({
             type: 'rest',
             routeId: '/hello',
             method: 'GET'
+          },
+          schema: {
+            zod: './rest/schemas/hello-schema.js#HelloResponseSchema'
           }
         },
         layoutHint: {

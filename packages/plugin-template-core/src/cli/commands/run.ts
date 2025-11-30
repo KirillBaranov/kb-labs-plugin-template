@@ -17,7 +17,7 @@ import {
   type PluginArtifactIds,
   getArtifactId,
   getCommandId,
-} from 'packages/plugins-contracts/src/index.js';
+} from '../../../../plugin-template-contracts/dist/index.js';
 import { createGreetingUseCase } from '../../core/index.js';
 import type { CliContext } from '@kb-labs/cli-core';
 
@@ -161,7 +161,7 @@ type TemplateHelloResult = CommandResult & {
 };
 
 export const run = defineCommand<TemplateHelloFlags, TemplateHelloResult>({
-  name: getCommandId('template:hello'), // Level 2+: Проверка command ID против contracts
+  name: getCommandId('plugin-template:hello'), // Level 2+: Проверка command ID против contracts
   flags: templateHelloFlags, // Level 2.3+: Переиспользование типов из flags.ts
   async handler(ctx, argv, flags) {
     // Full type safety:

@@ -31,8 +31,8 @@ export const pluginContractsManifest = {
     }
   },
   commands: {
-    'template:hello': {
-      id: 'template:hello',
+    'plugin-template:hello': {
+      id: 'plugin-template:hello',
       description: 'Produce a greeting message optionally targeting a provided name.',
       input: {
         ref: '@kb-labs/plugin-template-contracts/schema#HelloCommandInput',
@@ -43,7 +43,7 @@ export const pluginContractsManifest = {
         format: 'zod'
       },
       produces: ['template.hello.greeting', 'template.hello.log'],
-      examples: ['kb template hello', 'kb template hello --name Dev', 'kb template hello --json']
+      examples: ['kb plugin-template hello', 'kb plugin-template hello --name Dev', 'kb plugin-template hello --json']
     }
   },
   workflows: {
@@ -54,7 +54,7 @@ export const pluginContractsManifest = {
       steps: [
         {
           id: 'template.workflow.hello.step.run-command',
-          commandId: 'template:hello',
+          commandId: 'plugin-template:hello',
           produces: ['template.hello.greeting', 'template.hello.log']
         }
       ]
