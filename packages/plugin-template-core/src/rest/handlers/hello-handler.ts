@@ -1,7 +1,7 @@
 import {
   getArtifactId,
   type PluginArtifactIds,
-} from 'packages/plugins-contracts/src/index.js';
+} from '../../../../plugin-template-contracts/src/index.js';
 import { definePluginHandler } from '@kb-labs/plugin-runtime';
 import { createGreetingUseCase } from '../../core/index.js';
 import type { HelloRequest } from '../schemas/hello-schema.js';
