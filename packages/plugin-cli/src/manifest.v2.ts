@@ -1,6 +1,6 @@
 import { createManifestV2, defineCommandFlags } from '@kb-labs/plugin-manifest';
 import { pluginContractsManifest } from '@kb-labs/plugin-template-contracts';
-import { templateHelloFlags } from './cli/commands/hello/flags.js';
+import { templateHelloFlags } from './cli/commands/flags.js';
 
 // Level 2: Типизация через contracts для автодополнения и проверки ID
 export const manifest = createManifestV2<typeof pluginContractsManifest>({
@@ -13,7 +13,7 @@ export const manifest = createManifestV2<typeof pluginContractsManifest>({
     tags: ['template', 'hello', 'sample']
   },
   setup: {
-    handler: './setup/handler.js#run',
+    handler: './setup-handler.js#run',
     describe: 'Create starter .kb assets and default config for the template plugin.',
     permissions: {
       fs: {
@@ -35,7 +35,7 @@ export const manifest = createManifestV2<typeof pluginContractsManifest>({
   cli: {
     commands: [
       {
-        id: 'hello',
+        id: 'template:hello',
         group: 'template',
         describe: 'Print a hello message from the plugin template.',
         longDescription: 'Outputs a scoped greeting and optional target using shared formatting utilities.',
@@ -45,7 +45,7 @@ export const manifest = createManifestV2<typeof pluginContractsManifest>({
           'kb template hello --name Dev',
           'kb template hello --json'
         ],
-        handler: './cli/commands/hello/run#runHelloCommand'
+        handler: './cli/commands/run.js#runHelloCommand'
       }
     ]
   },
