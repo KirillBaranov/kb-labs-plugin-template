@@ -3,23 +3,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@kb-labs/cli-command-kit": [
-        "../kb-labs-cli/packages/command-kit/src/index.ts"
-      ],
-      "@kb-labs/cli-command-kit/*": [
-        "../kb-labs-cli/packages/command-kit/src/*"
-      ],
       "@kb-labs/cli-core": [
-        "../kb-labs-cli/packages/core/src/index.ts"
+        "../kb-labs-cli/packages/cli-core/src/index.ts"
       ],
       "@kb-labs/cli-core/*": [
-        "../kb-labs-cli/packages/core/src/*"
+        "../kb-labs-cli/packages/cli-core/src/*"
       ],
       "@kb-labs/core-sys": [
-        "../kb-labs-core/packages/sys/src/index.ts"
+        "../kb-labs-core/packages/core-sys/src/index.ts"
       ],
       "@kb-labs/core-sys/*": [
-        "../kb-labs-core/packages/sys/src/*"
+        "../kb-labs-core/packages/core-sys/src/*"
       ],
       "@kb-labs/plugin-manifest": [
         "../kb-labs-plugin/packages/manifest/src/index.ts"
@@ -33,12 +27,6 @@
       "@kb-labs/plugin-runtime/*": [
         "../kb-labs-plugin/packages/runtime/src/*"
       ],
-      "@kb-labs/plugin-template-contracts": [
-        "packages/plugin-template-contracts/src/index.ts"
-      ],
-      "@kb-labs/plugin-template-contracts/*": [
-        "packages/plugin-template-contracts/src/*"
-      ],
       "@kb-labs/setup-operations": [
         "../kb-labs-setup-engine/packages/setup-operations/src/index.ts"
       ],
@@ -50,6 +38,12 @@
       ],
       "@kb-labs/shared-cli-ui/*": [
         "../kb-labs-shared/packages/cli-ui/src/*"
+      ],
+      "@kb-labs/shared-command-kit": [
+        "../kb-labs-shared/packages/shared-command-kit/src/index.ts"
+      ],
+      "@kb-labs/shared-command-kit/*": [
+        "../kb-labs-shared/packages/shared-command-kit/src/*"
       ]
     }
   }
