@@ -1,5 +1,5 @@
 {
-  "name": "@kb-labs/plugin-template-plugin",
+  "name": "@kb-labs/plugin-template-core",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -20,6 +20,7 @@
     "./studio": "./dist/studio/index.js",
     "./core": "./dist/core/index.js",
     "./utils": "./dist/utils/index.js",
+    "./lifecycle": "./dist/lifecycle/index.js",
     "./studio/widgets/hello": {
       "import": "./dist/studio/widgets/hello-widget.js",
       "types": "./dist/studio/widgets/hello-widget.d.ts"
@@ -36,7 +37,7 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "pretype-check": "pnpm --filter @kb-labs/plugin-template-plugin build",
+    "pretype-check": "pnpm --filter @kb-labs/plugin-template-core build",
     "clean": "rimraf dist",
     "build": "tsup --config tsup.config.ts",
     "dev": "tsup --config tsup.config.ts --watch",

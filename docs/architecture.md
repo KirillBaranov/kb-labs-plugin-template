@@ -43,6 +43,11 @@ packages/plugin-template-core/
 ├── jobs/             # Jobs surface (placeholder)
 │   └── .gitkeep      # Future: cron & background jobs
 │
+├── lifecycle/        # Lifecycle hooks (future)
+│   ├── setup.ts      # Future: plugin installation
+│   ├── destroy.ts    # Future: plugin uninstallation
+│   └── upgrade.ts    # Future: plugin version upgrades
+│
 ├── core/             # Business logic - domain & use cases
 │   ├── greeting.ts   # Domain entity (pure logic)
 │   ├── create-greeting.ts  # Use case (orchestration)
@@ -71,6 +76,7 @@ While we don't enforce strict DDD layers, we follow these principles:
 | **utils/** | Logger, constants, helpers | None (leaf) | Framework-agnostic utilities |
 | **workflows/** | Custom plugin workflows | `core/`, `utils/` | Future: workflow definitions |
 | **jobs/** | Cron & background jobs | `core/`, `utils/` | Future: job definitions |
+| **lifecycle/** | Plugin lifecycle hooks | `core/`, `utils/` | Future: setup, destroy, upgrade handlers |
 
 ### Dependency Flow
 
@@ -195,6 +201,33 @@ export const dailyGreeting = defineJob({
   handler: './core/create-greeting.js'
 });
 ```
+
+**Lifecycle Hooks:**
+```typescript
+// lifecycle/setup.ts (plugin installation)
+export async function setup(ctx: LifecycleContext) {
+  await ctx.fs.mkdir('.kb/template');
+  await ctx.fs.writeFile('.kb/template/config.json', '{}');
+  ctx.logger.info('Plugin installed successfully');
+}
+
+// lifecycle/destroy.ts (plugin uninstallation)
+export async function destroy(ctx: LifecycleContext) {
+  await ctx.fs.rm('.kb/template', { recursive: true });
+  ctx.logger.info('Plugin uninstalled, cleanup complete');
+}
+
+// lifecycle/upgrade.ts (version upgrade)
+export async function upgrade(ctx: LifecycleContext, fromVersion: string) {
+  if (fromVersion < '1.0.0') {
+    // Migrate old config format
+    await migrateConfig(ctx);
+  }
+  ctx.logger.info(`Upgraded from ${fromVersion} to ${ctx.newVersion}`);
+}
+```
+
+**Note:** Currently `setup-handler.ts` exists at root. Future plan: move to `lifecycle/setup.ts` and add `destroy.ts`, `upgrade.ts`, `enable.ts`, `disable.ts`.
 
 ## Extensibility Tips
 

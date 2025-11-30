@@ -191,10 +191,18 @@ If you forked the old template structure:
 
 ### Future Work
 
-1. **Populate workflows/** when custom plugin workflows are needed
-2. **Populate jobs/** when cron/background jobs are needed
-3. **Update template documentation** (getting-started.md, cli-guide.md, etc.)
-4. **Create migration guide** for existing template users
+1. **Add lifecycle/ (or hooks/) folder** for plugin lifecycle handlers:
+   - `lifecycle/setup.ts` - Plugin installation (currently `setup-handler.ts`)
+   - `lifecycle/destroy.ts` - Plugin uninstallation/cleanup
+   - `lifecycle/upgrade.ts` - Plugin version upgrades
+   - `lifecycle/enable.ts` - Plugin activation
+   - `lifecycle/disable.ts` - Plugin deactivation
+   - **Decision needed**: `lifecycle/` (explicit) vs `hooks/` (shorter, common term)
+
+2. **Populate workflows/** when custom plugin workflows are needed
+3. **Populate jobs/** when cron/background jobs are needed
+4. **Update template documentation** (getting-started.md, cli-guide.md, etc.)
+5. **Create migration guide** for existing template users
 
 ## References
 

@@ -13,7 +13,7 @@ export const manifest = createManifestV2<typeof pluginContractsManifest>({
     tags: ['template', 'hello', 'sample']
   },
   setup: {
-    handler: './setup-handler.js#run',
+    handler: './lifecycle/setup.js#run',
     describe: 'Create starter .kb assets and default config for the template plugin.',
     permissions: {
       fs: {
