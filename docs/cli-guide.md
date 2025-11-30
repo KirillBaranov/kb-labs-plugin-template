@@ -95,6 +95,35 @@ cli: {
 }
 ```
 
+**💡 Pro tip: Use `generateExamples` for type-safe example generation:**
+
+```typescript
+import { generateExamples } from '@kb-labs/plugin-manifest';
+
+cli: {
+  commands: [
+    {
+      id: 'template:your-command',
+      handler: './cli/commands/your-command.js#run',
+      describe: 'Your command description',
+      flags: defineCommandFlags(yourCommandFlags),
+      // Type-safe examples generated from flag templates
+      examples: generateExamples('your-command', 'template', [
+        { description: 'Basic usage', flags: {} },
+        { description: 'With input', flags: { input: 'test' } },
+        { description: 'Verbose mode', flags: { input: 'test', verbose: true } }
+      ])
+    }
+  ]
+}
+```
+
+Benefits:
+- ✅ Type-safe - no typos in flag names
+- ✅ Consistent format - all examples follow CLI syntax
+- ✅ Auto-generated - command structure built from templates
+- ✅ Maintainable - update once, reflected everywhere
+
 ### 4. Add to build config
 
 Ensure `tsup.config.ts` includes command files (usually auto-included via `src/**/*.ts`).
