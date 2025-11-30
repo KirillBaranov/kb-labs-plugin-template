@@ -19,22 +19,12 @@ import {
   getCommandId,
 } from 'packages/plugins-contracts/src/index.js';
 import { createGreetingUseCase } from '../../core/index.js';
-import { createConsoleLogger, type Logger } from '../../utils/index.js';
 import type { CliContext } from '@kb-labs/cli-core';
 
 // Level 2+: Типизированные artifact ID через contracts
 const HELLO_GREETING_ARTIFACT_ID = getArtifactId('template.hello.greeting');
 
-export interface HelloCommandArgs {
-  name?: string;
-  json?: boolean;
-}
-
-export interface HelloCommandContext {
-  logger?: Logger;
-  stdout?: NodeJS.WritableStream;
-}
-
+// Command result type (returned from handler)
 export interface HelloCommandResult {
   message: string;
   target: string;
@@ -355,50 +345,5 @@ export const runHybrid = defineCommand({
 });
 */
 
-// ============================================================================
-// Legacy implementation (for backward compatibility)
-// ============================================================================
-
-export async function runHelloCommandLegacy(
-  args: HelloCommandArgs = {},
-  context: HelloCommandContext | CliContext = {}
-): Promise<HelloCommandResult> {
-  const greeting = createGreetingUseCase({ name: args.name });
-  const payload: HelloCommandResult = {
-    message: greeting.message,
-    target: greeting.target
-  };
-
-  // Support both HelloCommandContext (legacy) and CliContext (new)
-  const isCliContext = 'output' in context || 'presenter' in context;
-  const logger = isCliContext 
-    ? (context as CliContext).logger ?? createConsoleLogger('template:hello')
-    : (context as HelloCommandContext).logger ?? createConsoleLogger('template:hello');
-
-  if (args.json) {
-    if (isCliContext) {
-      const ctx = context as CliContext;
-      ctx.output?.json(payload);
-    } else {
-      const ctx = context as HelloCommandContext;
-      const stdout = ctx.stdout ?? process.stdout;
-      stdout.write(`${JSON.stringify(payload)}\n`);
-    }
-  } else {
-    if (isCliContext) {
-      const ctx = context as CliContext;
-      ctx.output?.write(`${payload.message}\n`);
-    } else {
-      const ctx = context as HelloCommandContext;
-      const stdout = ctx.stdout ?? process.stdout;
-      stdout.write(`${payload.message}\n`);
-    }
-  }
-
-  logger.log('info', 'Hello command executed', {
-    target: payload.target,
-    json: Boolean(args.json),
-    produces: [HELLO_GREETING_ARTIFACT_ID]
-  });
-  return payload;
-}
+// Legacy implementation removed - use `run` with CliContext instead
+// Modern plugins should always use ctx.logger, not manual logger creation

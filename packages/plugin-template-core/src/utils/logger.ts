@@ -1,6 +1,20 @@
 /**
  * @module Logger adapter for Plugin Template
- * Wrapper around @kb-labs/core-sys/logging
+ *
+ * DEPRECATED: Modern plugins should use ctx.logger provided by the runtime.
+ * This module exists for backward compatibility only.
+ *
+ * @example Modern approach (RECOMMENDED):
+ * ```typescript
+ * export const run = defineCommand({
+ *   async handler(ctx, argv, flags) {
+ *     ctx.logger?.info('Hello started', { name: flags.name });
+ *     // ctx.logger is provided by runtime, no manual creation needed
+ *   }
+ * });
+ * ```
+ *
+ * @deprecated Use ctx.logger instead. Will be removed in v1.0.0
  */
 
 import { getLogger, type Logger as CoreLogger } from '@kb-labs/core-sys/logging';
@@ -13,11 +27,15 @@ export interface Logger {
 
 /**
  * Create console logger adapter
- * Uses new unified logging system
+ *
+ * @deprecated Use ctx.logger from CliContext instead.
+ * Modern plugins receive logger from runtime: `ctx.logger?.info(message, meta)`
+ *
+ * This function will be removed in v1.0.0
  */
 export function createConsoleLogger(prefix = 'plugin-template'): Logger {
   const coreLogger = getLogger(`plugin-template:${prefix}`);
-  
+
   return {
     log(level, message, meta) {
       switch (level) {
