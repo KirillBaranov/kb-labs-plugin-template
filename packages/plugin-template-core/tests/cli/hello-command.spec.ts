@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { runHelloCommand } from '../../src/cli/commands/hello/run.js';
+import { runHelloCommand } from '../../src/cli/commands/hello/run';
 
 describe('runHelloCommand', () => {
   it('prints a greeting to stdout by default', async () => {

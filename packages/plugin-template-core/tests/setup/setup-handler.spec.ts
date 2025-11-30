@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { run as setupHandler } from '../../src/setup/handler.js';
+import { run as setupHandler } from '../../src/setup/handler';
 
 describe('template setup handler', () => {
   it('builds declarative operations and writes README imperatively', async () => {

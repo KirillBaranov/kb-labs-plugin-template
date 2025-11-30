@@ -1,5 +1,5 @@
-import { createGreeting } from './greeting.js';
-import { DEFAULT_GREETING_TARGET } from '../utils/index.js';
+import { createGreeting } from './greeting';
+import { DEFAULT_GREETING_TARGET } from '../utils/index';
 
 export interface CreateGreetingInput {
   name?: string;

@@ -35,6 +35,7 @@ kb template:hello --name Developer
 ### Getting started
 - 📘 [Getting Started](./docs/getting-started.md) - Setup, build, and first steps
 - 🏗️ [Architecture](./docs/architecture.md) - KB Labs folder structure and patterns
+- 📦 [Naming Convention](./docs/naming-convention.md) - The Pyramid Rule (mandatory!)
 - 🔄 [Refactoring Guide](./docs/REFACTORING.md) - Migration from old DDD structure
 
 ### Surface guides

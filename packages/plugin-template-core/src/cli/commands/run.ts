@@ -2,7 +2,7 @@
  * Hello Command - Three Implementation Approaches
  * 
  * This file demonstrates three different approaches to implementing CLI commands
- * using @kb-labs/cli-command-kit:
+ * using @kb-labs/shared-command-kit:
  * 
  * 1. High-level wrapper (defineCommand) - Recommended for most cases
  * 2. Low-level atomic tools - For maximum control
@@ -17,8 +17,8 @@ import {
   type PluginArtifactIds,
   getArtifactId,
   getCommandId,
-} from '../../../../plugin-template-contracts/dist/index.js';
-import { createGreetingUseCase } from '../../core/index.js';
+} from '../../../../plugin-template-contracts/dist/index';
+import { createGreetingUseCase } from '../../core/index';
 import type { CliContext } from '@kb-labs/cli-core';
 
 // Level 2+: Типизированные artifact ID через contracts
@@ -53,7 +53,7 @@ export interface HelloCommandResult {
 //
 // Uncomment to use:
 /*
-import { defineCommand } from '@kb-labs/cli-command-kit';
+import { defineCommand } from '@kb-labs/shared-command-kit';
 
 export const run = defineCommand({
   name: 'template:hello',
@@ -103,7 +103,7 @@ export const run = defineCommand({
 //
 // Uncomment to use:
 /*
-import { defineCommand } from '@kb-labs/cli-command-kit';
+import { defineCommand } from '@kb-labs/shared-command-kit';
 
 type TemplateHelloFlags = {
   name: { type: 'string'; description?: string; alias?: string };
@@ -153,8 +153,8 @@ export const run = defineCommand<TemplateHelloFlags>({
 // Pros: Maximum type safety, flags AND result types enforced
 // Cons: More boilerplate, but worth it for maintainability
 
-import { defineCommand, type CommandResult, type InferFlags } from '@kb-labs/cli-command-kit';
-import { templateHelloFlags, type TemplateHelloFlags } from './flags.js';
+import { defineCommand, type CommandResult, type InferFlags } from '@kb-labs/shared-command-kit';
+import { templateHelloFlags, type TemplateHelloFlags } from './flags';
 
 type TemplateHelloResult = CommandResult & {
   result?: HelloCommandResult;
@@ -215,8 +215,8 @@ export async function runHelloCommand(
 // Cons: More boilerplate, need to handle validation/analytics manually
 
 /*
-import { defineFlags, validateFlags, type InferFlags } from '@kb-labs/cli-command-kit/flags';
-import { runWithOptionalAnalytics } from '@kb-labs/cli-command-kit/analytics';
+import { defineFlags, validateFlags, type InferFlags } from '@kb-labs/shared-command-kit/flags';
+import { runWithOptionalAnalytics } from '@kb-labs/shared-command-kit/analytics';
 import { TimingTracker } from '@kb-labs/shared-cli-ui';
 
 // Define flag schema
@@ -292,8 +292,8 @@ export async function runHelloCommandLowLevel(
 // Cons: Slightly more complex than pure defineCommand
 
 /*
-import { defineCommand } from '@kb-labs/cli-command-kit';
-import { validateFlags } from '@kb-labs/cli-command-kit/flags';
+import { defineCommand } from '@kb-labs/shared-command-kit';
+import { validateFlags } from '@kb-labs/shared-command-kit/flags';
 import { TimingTracker } from '@kb-labs/shared-cli-ui';
 
 export const runHybrid = defineCommand({

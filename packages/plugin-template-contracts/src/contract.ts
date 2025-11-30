@@ -1,5 +1,5 @@
-import type { PluginContracts } from './types.js';
-import { contractsSchemaId, contractsVersion } from './version.js';
+import type { PluginContracts } from './types';
+import { contractsSchemaId, contractsVersion } from './version';
 
 // Level 2: Contracts типизация с as const для извлечения типов
 export const pluginContractsManifest = {

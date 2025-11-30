@@ -1,2 +1,2 @@
 // Lifecycle hooks barrel export
-export { run as setup } from './setup.js';
+export { run as setup } from './setup';

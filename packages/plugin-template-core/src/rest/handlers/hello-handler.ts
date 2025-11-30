@@ -1,11 +1,11 @@
 import {
   getArtifactId,
   type PluginArtifactIds,
-} from '../../../../plugin-template-contracts/dist/index.js';
+} from '../../../../plugin-template-contracts/dist/index';
 import { definePluginHandler } from '@kb-labs/plugin-runtime';
-import { createGreetingUseCase } from '../../core/index.js';
-import type { HelloRequest } from '../schemas/hello-schema.js';
-import { HelloRequestSchema, HelloResponseSchema } from '../schemas/hello-schema.js';
+import { createGreetingUseCase } from '../../core/index';
+import type { HelloRequest } from '../schemas/hello-schema';
+import { HelloRequestSchema, HelloResponseSchema } from '../schemas/hello-schema';
 
 // Level 2+: Типизированный artifact ID через contracts
 const HELLO_GREETING_ARTIFACT_ID = getArtifactId('template.hello.greeting');

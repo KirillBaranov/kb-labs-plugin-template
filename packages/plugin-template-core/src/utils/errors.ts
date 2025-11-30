@@ -5,7 +5,7 @@
  *
  * @example Basic usage
  * ```typescript
- * import { ValidationError, NotFoundError, createError } from './utils/errors.js';
+ * import { ValidationError, NotFoundError, createError } from './utils/errors';
  *
  * // Validation errors
  * throw new ValidationError('Email must be valid', 'email');

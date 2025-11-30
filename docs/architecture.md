@@ -2,6 +2,8 @@
 
 The plugin template adopts a **functional folder organization** aligned with KB Labs ecosystem standards. The goal is to keep surfaces thin, provide clear boundaries, and make code discoverable for new contributors.
 
+> **📌 Important:** Before diving into architecture, familiarize yourself with the [Naming Convention](./naming-convention.md) - the mandatory "Pyramid Rule" that all KB Labs packages must follow.
+
 ## Overview
 
 **Philosophy:** Organize by product surface (CLI, REST, Studio) rather than architectural layers (domain, application, infrastructure).

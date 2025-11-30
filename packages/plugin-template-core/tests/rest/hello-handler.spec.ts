@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { handleHello } from '../../src/rest/handlers/hello-handler.js';
+import { handleHello } from '../../src/rest/handlers/hello-handler';
 
 describe('handleHello', () => {
   it('returns a greeting payload', async () => {

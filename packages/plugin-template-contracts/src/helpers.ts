@@ -8,7 +8,7 @@ import {
   type PluginArtifactIds,
   type PluginCommandIds,
   type PluginRouteIds,
-} from './contract.js';
+} from './contract';
 
 /**
  * Get artifact path pattern by ID (type-safe)

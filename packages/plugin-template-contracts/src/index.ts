@@ -4,7 +4,7 @@ export {
   type PluginCommandIds,
   type PluginWorkflowIds,
   type PluginRouteIds,
-} from './contract.js';
+} from './contract';
 export {
   getArtifactPath,
   getArtifact,
@@ -16,9 +16,9 @@ export {
   getRoute,
   hasRoute,
   getRouteId,
-} from './helpers.js';
-export { parsePluginContracts, pluginContractsSchema } from './schema/contract.schema.js';
-export { contractsSchemaId, contractsVersion } from './version.js';
-export * from './types.js';
-export * from './schema.js';
+} from './helpers';
+export { parsePluginContracts, pluginContractsSchema } from './schema/contract.schema';
+export { contractsSchemaId, contractsVersion } from './version';
+export * from './types';
+export * from './schema';
 
