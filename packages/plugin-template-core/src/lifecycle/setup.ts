@@ -1,4 +1,4 @@
-import { SetupBuilder } from '@kb-labs/setup-operations';
+import { SetupBuilder } from '@kb-labs/setup-engine-operations';
 
 type SetupInput = {
   force?: boolean;
