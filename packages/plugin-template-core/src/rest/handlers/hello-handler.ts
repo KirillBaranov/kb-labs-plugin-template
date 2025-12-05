@@ -35,15 +35,15 @@ type HelloResponse = {
  */
 export const handleHello = definePluginHandler<HelloRequest, HelloResponse>({
   schema: {
-    input: HelloRequestSchema,
-    output: HelloResponseSchema
+    input: HelloRequestSchema as any, // Zod default makes input optional
+    output: HelloResponseSchema as any  // Schema builders return union types
   },
 
   async handle(input, ctx) {
     const greeting = createGreetingUseCase({ name: input.name });
 
     // NEW: Use ctx.output instead of ctx.logger
-    ctx.output.info('Hello REST endpoint executed', {
+    ctx.output?.info('Hello REST endpoint executed', {
       requestId: ctx.requestId,
       target: greeting.target,
       produces: [HELLO_GREETING_ARTIFACT_ID]

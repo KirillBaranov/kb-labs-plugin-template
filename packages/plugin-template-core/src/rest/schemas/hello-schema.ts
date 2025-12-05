@@ -1,10 +1,15 @@
 import { z } from 'zod';
+import { schema } from '@kb-labs/shared-command-kit';
+
 export const HelloRequestSchema = z.object({
-  name: z.string().min(1).default('World')
+  name: schema.text({ min: 1 }).optional().default('World'),
 });
+
 export type HelloRequest = z.infer<typeof HelloRequestSchema>;
+
 export const HelloResponseSchema = z.object({
-  message: z.string(),
-  target: z.string()
+  message: schema.text(),
+  target: schema.text(),
 });
+
 export type HelloResponse = z.infer<typeof HelloResponseSchema>;
