@@ -1,9 +1,10 @@
-import { createManifestV2, defineCommandFlags, generateExamples } from '@kb-labs/plugin-manifest';
+import { defineManifest, defineCommandFlags, permissions } from '@kb-labs/shared-command-kit';
+import { generateExamples } from '@kb-labs/plugin-manifest';
 import { pluginContractsManifest } from '../../plugin-template-contracts/dist/index';
 import { templateHelloFlags } from './cli/commands/flags';
 
 // Level 2: Типизация через contracts для автодополнения и проверки ID
-export const manifest = createManifestV2<typeof pluginContractsManifest>({
+export const manifest = defineManifest({
   schema: 'kb.plugin/2',
   id: '@kb-labs/plugin-template',
   version: '0.1.0',
@@ -15,22 +16,16 @@ export const manifest = createManifestV2<typeof pluginContractsManifest>({
   setup: {
     handler: './lifecycle/setup.js#run',
     describe: 'Create starter .kb assets and default config for the template plugin.',
-    permissions: {
-      fs: {
-        mode: 'readWrite',
-        allow: ['.kb/template/**', '.gitignore'],
-        deny: ['.kb/plugins.json', '.kb/kb-labs.config.json', '.kb/cache/**']
-      },
-      net: 'none',
-      env: {
-        allow: []
-      },
-      quotas: {
-        timeoutMs: 5000,
-        memoryMb: 64,
-        cpuMs: 2500
+    permissions: permissions.combine(
+      permissions.presets.pluginWorkspace('template'),
+      {
+        quotas: {
+          timeoutMs: 5000,
+          memoryMb: 64,
+          cpuMs: 2500,
+        },
       }
-    }
+    ),
   },
   cli: {
     commands: [
@@ -62,23 +57,16 @@ export const manifest = createManifestV2<typeof pluginContractsManifest>({
           zod: './rest/schemas/hello-schema.js#HelloResponseSchema'
         },
         handler: './rest/handlers/hello-handler.js#handleHello',
-        permissions: {
-          fs: {
-            mode: 'read',
-            allow: [],
-            deny: ['**/*.key', '**/*.secret']
-          },
-          net: 'none',
-          env: {
-            allow: ['NODE_ENV']
-          },
-          quotas: {
-            timeoutMs: 5000,
-            memoryMb: 64,
-            cpuMs: 2500
-          },
-          capabilities: []
-        }
+        permissions: permissions.combine(
+          permissions.presets.pluginWorkspaceRead('template'),
+          {
+            quotas: {
+              timeoutMs: 5000,
+              memoryMb: 64,
+              cpuMs: 2500,
+            },
+          }
+        ),
       }
     ]
   },
@@ -133,23 +121,16 @@ export const manifest = createManifestV2<typeof pluginContractsManifest>({
     ]
   },
   capabilities: [],
-  permissions: {
-    fs: {
-      mode: 'read',
-      allow: [],
-      deny: ['**/*.key', '**/*.secret']
-    },
-    net: 'none',
-    env: {
-      allow: ['NODE_ENV']
-    },
-    quotas: {
-      timeoutMs: 10000,
-      memoryMb: 128,
-      cpuMs: 5000
-    },
-    capabilities: []
-  },
+  permissions: permissions.combine(
+    permissions.presets.pluginWorkspaceRead('template'),
+    {
+      quotas: {
+        timeoutMs: 10000,
+        memoryMb: 128,
+        cpuMs: 5000,
+      },
+    }
+  ),
   artifacts: []
 });
 
