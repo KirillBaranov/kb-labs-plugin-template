@@ -153,7 +153,7 @@ export const run = defineCommand<TemplateHelloFlags>({
 // Pros: Maximum type safety, flags AND result types enforced
 // Cons: More boilerplate, but worth it for maintainability
 
-import { defineCommand, type CommandResult, type InferFlags } from '@kb-labs/shared-command-kit';
+import { defineCommand, withAnalytics, type CommandResult, type InferFlags } from '@kb-labs/shared-command-kit';
 import { templateHelloFlags, type TemplateHelloFlags } from './flags';
 
 type TemplateHelloResult = CommandResult & {
@@ -168,33 +168,48 @@ export const run = defineCommand<TemplateHelloFlags, TemplateHelloResult>({
     // - flags.name is string | undefined (autocomplete works!)
     // - flags.json is boolean (autocomplete works!)
     // - Return type must match TemplateHelloResult
-    
-    ctx.logger?.info('Hello command started', { name: flags.name });
 
-    ctx.tracker.checkpoint('greeting');
+    // Automatic analytics tracking with withAnalytics()
+    return await withAnalytics(
+      ctx as any, // EnhancedCliContext is compatible with AnalyticsContext
+      'template.hello',
+      {
+        started: { name: flags.name },
+        completed: (result) => ({
+          target: result.result?.target as string | undefined,
+          hasResult: Boolean(result.result),
+        }),
+        failed: (error) => ({ error: error.message }),
+      },
+      async () => {
+        ctx.logger?.info('Hello command started', { name: flags.name });
 
-    const greeting = createGreetingUseCase({ name: flags.name });
-    const payload: HelloCommandResult = {
-      message: greeting.message,
-      target: greeting.target
-    };
+        ctx.tracker.checkpoint('greeting');
 
-    ctx.tracker.checkpoint('complete');
+        const greeting = createGreetingUseCase({ name: flags.name as string | undefined });
+        const payload: HelloCommandResult = {
+          message: greeting.message,
+          target: greeting.target
+        };
 
-    if (flags.json) {
-      ctx.output?.json(payload);
-    } else {
-      ctx.output?.write(`${payload.message}\n`);
-    }
+        ctx.tracker.checkpoint('complete');
 
-    ctx.logger?.info('Hello command completed', {
-      target: payload.target,
-      json: flags.json,
-      produces: [HELLO_GREETING_ARTIFACT_ID]
-    });
+        if (flags.json) {
+          ctx.output?.json(payload);
+        } else {
+          ctx.output?.write(`${payload.message}\n`);
+        }
 
-    // TypeScript ensures this matches TemplateHelloResult
-    return { ok: true, result: payload };
+        ctx.logger?.info('Hello command completed', {
+          target: payload.target,
+          json: flags.json,
+          produces: [HELLO_GREETING_ARTIFACT_ID]
+        });
+
+        // TypeScript ensures this matches TemplateHelloResult
+        return { ok: true, result: payload };
+      }
+    );
   },
 });
 
