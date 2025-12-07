@@ -11,11 +11,13 @@ export default defineConfig({
     'src/cli/commands/run.ts',
     'src/rest/handlers/hello-handler.ts',
     'src/rest/schemas/hello-schema.ts',
-    'src/studio/widgets/hello-widget.tsx'
+    'src/studio/widgets/hello-widget.tsx',
+    'src/jobs/hello.ts'
   ],
   external: [
     '@kb-labs/plugin-manifest',
     '@kb-labs/shared-cli-ui',
+    '@kb-labs/core-platform',
     'react',
     'react-dom'
   ],

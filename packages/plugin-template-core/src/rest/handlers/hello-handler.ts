@@ -40,7 +40,7 @@ export const handleHello = definePluginHandler<HelloRequest, HelloResponse>({
   },
 
   async handle(input, ctx) {
-    const greeting = createGreetingUseCase({ name: input.name });
+    const greeting = createGreetingUseCase({ name: input.name as string | undefined });
 
     // NEW: Use ctx.output instead of ctx.logger
     ctx.output?.info('Hello REST endpoint executed', {

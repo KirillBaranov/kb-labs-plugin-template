@@ -120,6 +120,37 @@ export const manifest = defineManifest({
       }
     ]
   },
+  jobs: [
+    {
+      id: 'hello-cron',
+      handler: './jobs/hello.js#run',
+      schedule: '*/1 * * * *', // Every minute (для демо)
+      describe: 'Says hello every minute and writes to log file (sandboxed)',
+      enabled: true,
+      priority: 5,
+      timeout: 10000,
+      retries: 2,
+      tags: ['demo', 'hello'],
+
+      // ✅ SECURITY: Permissions для job (запуск в sandbox)
+      permissions: permissions.combine(
+        permissions.presets.pluginWorkspace('template'), // Доступ к .kb/template/
+        {
+          // CRITICAL: shell permissions needed for fs enforcement via ctx.runtime.fs
+          shell: {
+            allow: [],  // No shell commands allowed
+            deny: ['**'],  // Deny all shell commands
+          },
+          capabilities: ['shell-exec'],  // Required для ctx.runtime.fs
+          quotas: {
+            timeoutMs: 10000,  // 10 seconds timeout
+            memoryMb: 64,      // 64 MB memory limit
+            cpuMs: 5000,       // 5 seconds CPU time
+          },
+        }
+      ),
+    },
+  ],
   capabilities: [],
   permissions: permissions.combine(
     permissions.presets.pluginWorkspaceRead('template'),
