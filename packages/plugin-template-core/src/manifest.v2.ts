@@ -1,6 +1,5 @@
-import { defineManifest, defineCommandFlags, permissions } from '@kb-labs/shared-command-kit';
-import { generateExamples } from '@kb-labs/plugin-manifest';
-import { pluginContractsManifest } from '../../plugin-template-contracts/dist/index';
+import { defineManifest, defineCommandFlags, permissions, generateExamples } from '@kb-labs/sdk';
+import { pluginContractsManifest } from '@kb-labs/plugin-template-contracts';
 import { templateHelloFlags } from './cli/commands/flags';
 
 // Level 2: Типизация через contracts для автодополнения и проверки ID

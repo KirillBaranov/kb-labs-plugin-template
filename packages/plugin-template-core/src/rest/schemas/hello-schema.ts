@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { schema } from '@kb-labs/shared-command-kit';
+import { schema } from '@kb-labs/sdk/schema';
 
 export const HelloRequestSchema = z.object({
   name: schema.text({ min: 1 }).optional().default('World'),

@@ -4,7 +4,8 @@
  * SECURITY: This job runs in a sandboxed child process with permissions from manifest
  */
 
-import { defineJob, permissions } from '@kb-labs/shared-command-kit';
+import { defineJob } from '@kb-labs/sdk/jobs';
+import { permissions } from '@kb-labs/sdk';
 import { join, dirname } from 'node:path';
 
 /**

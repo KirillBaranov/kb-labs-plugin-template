@@ -3,7 +3,7 @@
  * Used in both command implementation and manifest
  */
 
-import type { FlagSchemaDefinition } from '@kb-labs/shared-command-kit/flags';
+import type { FlagSchemaDefinition } from '@kb-labs/sdk';
 
 /**
  * Hello command flags schema
