@@ -106,7 +106,7 @@ export const helloJob = defineJob({
         encoding: 'utf-8',
       });
 
-      ctx.output?.info(message);
+      ctx.logger?.info(message);
 
       return {
         ok: true,
@@ -115,7 +115,7 @@ export const helloJob = defineJob({
         runCount: input.runCount,
       };
     } catch (error) {
-      ctx.output?.error('Job failed', {
+      ctx.logger?.error('Job failed', {
         error: error instanceof Error ? error.message : String(error),
       });
       throw error;
@@ -599,7 +599,7 @@ pnpm dev:start
 - ✅ **Validate input** - не доверяйте данным из `input`
 
 **Development:**
-- ✅ Используйте `ctx.output` для structured logging (не `console.log`)
+- ✅ Используйте `ctx.logger` для structured logging (не `console.log`, see [Migration Guide](./MIGRATION-ui-output.md))
 - ✅ Возвращайте структурированный результат (`{ ok: true, ... }`)
 - ✅ Обрабатывайте ошибки gracefully (try/catch)
 - ✅ Тестируйте jobs через manual trigger перед деплоем

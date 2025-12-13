@@ -136,7 +136,7 @@ export const run = defineCommand({
       name: flags.name
     });
 
-    ctx.output?.write(`${result.message}\n`);
+    ctx.ui?.write(`${result.message}\n`);
     return { ok: true, result: result.user };
   }
 });

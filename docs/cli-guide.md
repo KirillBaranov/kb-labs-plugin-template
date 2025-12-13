@@ -41,7 +41,7 @@ export const run = defineCommand({
     const result = await yourBusinessLogic(flags.input);
 
     // 3. Write output
-    ctx.output?.write(`Result: ${result}\n`);
+    ctx.ui?.write(`Result: ${result}\n`);
 
     // 4. Return structured data
     return {
@@ -202,7 +202,7 @@ interface CliContext {
 ### ✅ DO
 
 - **Use ctx.logger** for all logging (not console.log)
-- **Use ctx.output** for user-facing messages
+- **Use ctx.ui** for user-facing formatted output (see [Migration Guide](./MIGRATION-ui-output.md))
 - **Keep commands thin** - delegate to `core/` business logic
 - **Return structured data** - enables JSON output with `--json` flag
 - **Validate inputs** - use Zod schemas or ValidationError
@@ -241,7 +241,7 @@ export const run = defineCommand({
     const result = await processEmail(flags.email);
 
     // Output
-    ctx.output?.write(`Email processed: ${result}\n`);
+    ctx.ui?.write(`Email processed: ${result}\n`);
 
     return { ok: true, result };
   }
@@ -265,7 +265,7 @@ export const run = defineCommand({
       ctx.logger?.error('Operation failed', formatErrorForLogging(error));
 
       // Show user-friendly message
-      ctx.output?.write(`Error: ${formatErrorForUser(error)}\n`);
+      ctx.ui?.write(`Error: ${formatErrorForUser(error)}\n`);
 
       return { ok: false, error: formatErrorForUser(error) };
     }
@@ -290,7 +290,7 @@ export const run = defineCommand({
     // Business logic lives in core/
     const result = await processDocument(flags.file);
 
-    ctx.output?.write(`Processed ${result.pages} pages\n`);
+    ctx.ui?.write(`Processed ${result.pages} pages\n`);
     return { ok: true, ...result };
   }
 });

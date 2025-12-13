@@ -79,7 +79,7 @@ export const handleListUsers = definePluginHandler({
   async handle(input, ctx) {
     const tenantId = ctx.tenantId ?? 'default';
 
-    ctx.output?.info('Listing users', {
+    ctx.logger?.info('Listing users', {
       tenant: tenantId,
       requestId: ctx.requestId
     });
@@ -199,7 +199,7 @@ export const handleCreateWorkflow = definePluginHandler({
     // Get quotas for tenant's tier
     const quotas = getQuotasForTier(tier as 'free' | 'pro' | 'enterprise');
 
-    ctx.output?.info('Creating workflow', {
+    ctx.logger?.info('Creating workflow', {
       tenant: tenantId,
       tier,
       quotas: {

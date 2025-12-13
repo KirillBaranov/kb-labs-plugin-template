@@ -1,6 +1,7 @@
 import { getArtifactId } from '@kb-labs/plugin-template-contracts';
-import { defineRestHandler } from '@kb-labs/sdk/rest';
+import { defineRestHandler, type RestHandlerContext } from '@kb-labs/sdk/rest';
 import { createGreeting } from '../../core/greeting';
+import type { HelloRequest, HelloResponse } from '../schemas/hello-schema';
 import { HelloRequestSchema, HelloResponseSchema } from '../schemas/hello-schema';
 
 const HELLO_GREETING_ARTIFACT_ID = getArtifactId('template.hello.greeting');
@@ -13,7 +14,7 @@ export const handleHello = defineRestHandler({
   input: HelloRequestSchema,
   output: HelloResponseSchema,
 
-  async handler(request, ctx) {
+  async handler(request: HelloRequest, ctx: RestHandlerContext) {
     const greeting = createGreeting(request.name as string | undefined);
 
     ctx.log('info', 'Hello REST endpoint executed', {

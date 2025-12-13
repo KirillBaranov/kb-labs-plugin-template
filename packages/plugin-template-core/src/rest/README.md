@@ -59,7 +59,7 @@ export const handleYourEndpoint = definePluginHandler<YourRequest, YourResponse>
 
   async handle(input, ctx) {
     // 1. Log request
-    ctx.output.info('Processing request', {
+    ctx.logger.info('Processing request', {
       requestId: ctx.requestId,
       input: input.input
     });
@@ -111,8 +111,8 @@ rest: {
 
 ### ✅ DO
 
-- **Use `ctx.output`** for logging (not `ctx.logger`)
-  - REST uses `ctx.output.info()` instead of `ctx.logger.info()`
+- **Use `ctx.logger`** for logging (not `console.log`, see [Migration Guide](../../../docs/MIGRATION-ui-output.md))
+  - REST uses `ctx.logger.info()` for structured logging
 - **Define Zod schemas** - automatic validation + TypeScript types
 - **Delegate to `core/`** - keep handlers thin
 - **Return typed responses** - schemas ensure correctness
@@ -124,7 +124,7 @@ rest: {
 - Don't make network requests without `net: 'allow'`
 - Don't put business logic in handlers
 - Don't skip schema definitions
-- Don't use `console.log` - use `ctx.output`
+- Don't use `console.log` - use `ctx.logger`
 
 ## Handler Patterns
 
@@ -158,7 +158,7 @@ export const handlePost = definePluginHandler({
 
   async handle(input, ctx) {
     // Input is automatically validated
-    ctx.output.info('Creating resource', { name: input.name });
+    ctx.logger.info('Creating resource', { name: input.name });
 
     const result = await createResource(input);
 
@@ -188,7 +188,7 @@ export const handleWithErrors = definePluginHandler({
       const result = await riskyOperation(input);
       return { result };
     } catch (error) {
-      ctx.output.error('Operation failed', { error });
+      ctx.logger.error('Operation failed', { error });
       throw createError('OPERATION_FAILED', 'Failed to process', { cause: error });
     }
   }
@@ -225,10 +225,10 @@ REST handlers receive `ctx` with these properties:
 ### Output (Logging)
 
 ```typescript
-ctx.output.info('Message', { meta });   // Info log
-ctx.output.warn('Warning', { meta });   // Warning log
-ctx.output.error('Error', { meta });    // Error log
-ctx.output.debug('Debug', { meta });    // Debug log
+ctx.logger.info('Message', { meta });   // Info log
+ctx.logger.warn('Warning', { meta });   // Warning log
+ctx.logger.error('Error', { meta });    // Error log
+ctx.logger.debug('Debug', { meta });    // Debug log
 ```
 
 ### Request Metadata
@@ -282,7 +282,7 @@ describe('handleYourEndpoint', () => {
     const result = await handleYourEndpoint.handle(input, ctx);
 
     expect(result.result).toBeDefined();
-    expect(ctx.output.info).toHaveBeenCalled();
+    expect(ctx.logger.info).toHaveBeenCalled();
   });
 
   it('should handle validation errors', async () => {
@@ -346,7 +346,7 @@ const InputSchema = z.object({
 See [hello-handler.ts](./handlers/hello-handler.ts) for a complete example with:
 - Zod schema validation
 - Typed request/response
-- Logging with `ctx.output`
+- Logging with `ctx.logger`
 - Business logic delegation to `core/`
 - Artifact tracking
 

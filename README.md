@@ -314,7 +314,7 @@ export const run = defineCommand({
   },
   async handler(ctx, argv, flags) {
     ctx.logger?.info('Command started', { name: flags.name });
-    ctx.output?.write(`Hello, ${flags.name}!\n`);
+    ctx.ui?.write(`Hello, ${flags.name}!\n`);
     return { ok: true, message: `Hello, ${flags.name}!`, target: flags.name };
   }
 });
@@ -328,7 +328,7 @@ export const handleHello = definePluginHandler({
     output: HelloResponseSchema
   },
   async handle(input, ctx) {
-    ctx.output?.info('REST handler started', { name: input.name });
+    ctx.logger?.info('REST handler started', { name: input.name });
     const greeting = createGreeting(input.name);
     return { message: greeting.message, target: greeting.target };
   }

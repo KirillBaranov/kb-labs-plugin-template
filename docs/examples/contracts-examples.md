@@ -110,7 +110,7 @@ export const run = defineCommand({
 
     const users = await listUsers(flags.limit);
 
-    ctx.output?.write(`Found ${users.length} users\n`);
+    ctx.ui?.write(`Found ${users.length} users\n`);
 
     return { ok: true, users };
   }
@@ -192,7 +192,7 @@ import { RouteIds, EventIds } from '@kb-labs/plugin-template-contracts';
 export const handleCreateUser = definePluginHandler({
   schema: { input: CreateUserSchema, output: UserResponseSchema },
   async handle(input, ctx) {
-    ctx.output?.info('Creating user', {
+    ctx.logger?.info('Creating user', {
       route: RouteIds.CREATE_USER
     });
 

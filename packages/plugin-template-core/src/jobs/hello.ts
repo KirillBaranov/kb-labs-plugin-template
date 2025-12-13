@@ -4,8 +4,8 @@
  * SECURITY: This job runs in a sandboxed child process with permissions from manifest
  */
 
-import { defineJob } from '@kb-labs/sdk/jobs';
-import { permissions } from '@kb-labs/sdk';
+import { defineJob, type JobInput } from '@kb-labs/sdk/jobs';
+import { permissions, type PluginHandlerContext } from '@kb-labs/sdk';
 import { join, dirname } from 'node:path';
 
 /**
@@ -42,7 +42,7 @@ export const helloJob = defineJob({
   /**
    * Job handler - executes in sandbox with ctx.runtime.fs
    */
-  async handler(input, ctx) {
+  async handler(input: JobInput, ctx: PluginHandlerContext) {
     const message = `Hello from sandboxed cron job! Run #${input.runCount} at ${input.executedAt.toISOString()}`;
 
     // ✅ SECURITY: Use ctx.runtime.fs instead of direct fs access

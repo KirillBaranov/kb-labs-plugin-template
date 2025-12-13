@@ -23,7 +23,6 @@ export default defineConfig({
   ],
   dts: {
     resolve: true,
-    skipLibCheck: true
   },
   esbuildOptions(options) {
     options.jsx = 'automatic';
