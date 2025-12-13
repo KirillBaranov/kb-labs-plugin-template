@@ -40,6 +40,39 @@ export const manifest = defineManifest({
           { description: 'Output as JSON', flags: { json: true } }
         ]),
         handler: './cli/commands/run.js#runHelloCommand'
+      },
+      {
+        id: 'plugin-template:test-loader',
+        group: 'plugin-template',
+        describe: 'Test UI loader/spinner functionality with various scenarios.',
+        longDescription: 'Demonstrates spinner, multi-stage progress, and rapid updates for testing UI loader components.',
+        flags: defineCommandFlags({
+          duration: {
+            type: 'number',
+            description: 'Duration of each stage in milliseconds',
+            default: 2000,
+            alias: 'd',
+          },
+          fail: {
+            type: 'boolean',
+            description: 'Simulate failure scenario',
+            default: false,
+            alias: 'f',
+          },
+          stages: {
+            type: 'number',
+            description: 'Number of progress stages to simulate',
+            default: 3,
+            alias: 's',
+          },
+        }),
+        examples: generateExamples('test-loader', 'plugin-template', [
+          { description: 'Basic loader test (3 stages, 2s each)', flags: {} },
+          { description: 'Fast test (1s per stage)', flags: { duration: 1000 } },
+          { description: 'Simulate failure', flags: { fail: true } },
+          { description: 'Many stages', flags: { stages: 5, duration: 1000 } }
+        ]),
+        handler: './cli/commands/test-loader.js#runTestLoaderCommand'
       }
     ]
   },

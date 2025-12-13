@@ -9,6 +9,7 @@ export default defineConfig({
     'src/manifest.v2.ts',
     'src/lifecycle/setup.ts',
     'src/cli/commands/run.ts',
+    'src/cli/commands/test-loader.ts',
     'src/rest/handlers/hello-handler.ts',
     'src/rest/schemas/hello-schema.ts',
     'src/studio/widgets/hello-widget.tsx',

@@ -204,10 +204,12 @@ ctx.ui.write(box);
 const greenText = ctx.ui.colors.success('All good!');
 const icon = ctx.ui.symbols.success; // '✓'
 
-// Progress
-const spinner = ctx.ui.spinner('Processing...');
+// Progress (use direct import from SDK)
+import { useLoader } from '@kb-labs/sdk';
+const loader = useLoader('Processing...');
+loader.start();
 // ... work ...
-spinner.succeed('Done!');
+loader.succeed('Done!');
 ```
 
 ## Migration Checklist

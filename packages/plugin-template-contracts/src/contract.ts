@@ -44,6 +44,20 @@ export const pluginContractsManifest = {
       },
       produces: ['template.hello.greeting', 'template.hello.log'],
       examples: ['kb plugin-template hello', 'kb plugin-template hello --name Dev', 'kb plugin-template hello --json']
+    },
+    'plugin-template:test-loader': {
+      id: 'plugin-template:test-loader',
+      description: 'Test UI loader/spinner functionality with various scenarios.',
+      input: {
+        ref: '@kb-labs/plugin-template-contracts/schema#TestLoaderCommandInput',
+        format: 'zod'
+      },
+      output: {
+        ref: '@kb-labs/plugin-template-contracts/schema#TestLoaderCommandOutput',
+        format: 'zod'
+      },
+      produces: [],
+      examples: ['kb plugin-template test-loader', 'kb plugin-template test-loader --duration 1000', 'kb plugin-template test-loader --fail']
     }
   },
   workflows: {
