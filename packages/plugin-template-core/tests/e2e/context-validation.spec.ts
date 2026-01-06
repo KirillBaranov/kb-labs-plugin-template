@@ -132,9 +132,11 @@ describe('E2E: Plugin Context Validation', () => {
         };
 
         return {
-          ok: true,
-          snapshot,
-          timestamp: new Date().toISOString(),
+          exitCode: 0,
+          result: {
+            snapshot,
+            timestamp: new Date().toISOString(),
+          },
         };
       }
     `;
@@ -174,10 +176,17 @@ describe('E2E: Plugin Context Validation', () => {
     });
 
     // Verify execution succeeded
-    expect(result.ok).toBe(true);
-    expect(result.data).toBeDefined();
+    expect(result.exitCode).toBe(0);
+    expect(result.result).toBeDefined();
+    expect(result.meta).toBeDefined();
 
-    const snapshot = (result.data as any).snapshot;
+    // Verify metadata auto-injection
+    expect(result.meta?.executedAt).toBeDefined();
+    expect(result.meta?.duration).toBeDefined();
+    expect(result.meta?.pluginId).toBe('@kb-labs/test-context');
+    expect(result.meta?.requestId).toBe('test-request-123');
+
+    const snapshot = (result.result as any).snapshot;
 
     // Basic context fields
     expect(snapshot.hasRequestId).toBe(true);
@@ -249,13 +258,15 @@ describe('E2E: Plugin Context Validation', () => {
       manifest: testManifest as any,
     });
 
-    // The hello job returns { ok: true, message, executedAt, runCount }
+    // The hello job now returns CommandResult<T> with { exitCode, result, meta }
     // Debug: log result if failed
-    if (!result.ok) {
-      console.error('Test failed with error:', JSON.stringify(result.error, null, 2));
+    if (result.exitCode !== 0) {
+      console.error('Test failed with exitCode:', result.exitCode);
     }
-    expect(result.ok).toBe(true);
-    const data = result.data as any;
+    expect(result.exitCode).toBe(0);
+    expect(result.meta).toBeDefined();
+
+    const data = result.result as any;
     expect(data.ok).toBe(true);
     expect(data.runCount).toBe(999);
     expect(data.message).toContain('Hello from sandboxed cron job');
@@ -284,7 +295,8 @@ describe('E2E: Plugin Context Validation', () => {
     // CLI commands have different context structure
     // They receive (ctx, argv, flags) not (input, ctx)
     // This test verifies the signature routing works
-    expect(result.ok).toBeDefined();
+    expect(result.exitCode).toBeDefined();
+    expect(result.meta).toBeDefined();
   });
 });
 
