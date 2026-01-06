@@ -12,6 +12,10 @@
       "types": "./dist/index.d.ts"
     },
     "./plugin-manifest": {
+      "import": "./dist/manifest.v3.js",
+      "types": "./dist/manifest.v3.d.ts"
+    },
+    "./plugin-manifest-v2": {
       "import": "./dist/manifest.v2.js",
       "types": "./dist/manifest.v2.d.ts"
     },
@@ -28,7 +32,7 @@
     "./dist/*": "./dist/*"
   },
   "kb": {
-    "manifest": "./dist/manifest.v2.js"
+    "manifest": "./dist/manifest.v3.js"
   },
   "files": [
     "dist",
@@ -48,18 +52,14 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@kb-labs/shared-command-kit": "workspace:*",
-    "@kb-labs/cli-core": "link:../../../kb-labs-cli/packages/cli-core",
-    "@kb-labs/core-sys": "link:../../../kb-labs-core/packages/core-sys",
-    "@kb-labs/setup-engine-operations": "link:../../../kb-labs-setup-engine/packages/setup-engine-operations",
-    "@kb-labs/plugin-manifest": "link:../../../kb-labs-plugin/packages/plugin-manifest",
-    "@kb-labs/plugin-runtime": "link:../../../kb-labs-plugin/packages/plugin-runtime",
-    "@kb-labs/shared-cli-ui": "link:../../../kb-labs-shared/packages/shared-cli-ui",
+    "@kb-labs/sdk": "link:../../../kb-labs-sdk/packages/sdk",
+    "@kb-labs/plugin-template-contracts": "link:../plugin-template-contracts",
     "react": "^18.3.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@kb-labs/devkit": "link:../../../kb-labs-devkit",
+    "@kb-labs/plugin-runtime": "link:../../../kb-labs-plugin/packages/plugin-runtime",
     "@types/node": "^24.3.3",
     "@types/react": "^18.3.8",
     "@types/react-dom": "^18.3.0",

@@ -37,19 +37,19 @@ describe('hello command', () => {
     );
 
     // Assert output
-    expect(ctx.output.write).toHaveBeenCalledWith('Hello, Alice!\n');
+    expect(ctx.ui.write).toHaveBeenCalledWith('Hello, Alice!\n');
   });
 
   it('should use default name when not provided', async () => {
     const ctx = {
       logger: { info: vi.fn() },
-      output: { write: vi.fn() }
+      ui: { write: vi.fn() }
     };
 
     const result = await run.handler(ctx, {}, {});
 
     expect(result.target).toBe('World');
-    expect(ctx.output.write).toHaveBeenCalledWith('Hello, World!\n');
+    expect(ctx.ui.write).toHaveBeenCalledWith('Hello, World!\n');
   });
 });
 ```
@@ -63,7 +63,7 @@ describe('create-project command', () => {
   it('should validate project name format', async () => {
     const ctx = {
       logger: { error: vi.fn() },
-      output: { write: vi.fn() }
+      ui: { write: vi.fn() }
     };
 
     // Invalid name (uppercase not allowed)
@@ -79,7 +79,7 @@ describe('create-project command', () => {
   it('should accept valid project name', async () => {
     const ctx = {
       logger: { info: vi.fn() },
-      output: { write: vi.fn() }
+      ui: { write: vi.fn() }
     };
 
     const result = await run.handler(ctx, {}, {
@@ -104,7 +104,7 @@ describe('delete-user command', () => {
 
     const ctx = {
       logger: { error: vi.fn() },
-      output: { write: vi.fn() }
+      ui: { write: vi.fn() }
     };
 
     await expect(
@@ -126,7 +126,7 @@ describe('delete-user command', () => {
 
     const ctx = {
       logger: { info: vi.fn() },
-      output: { write: vi.fn() }
+      ui: { write: vi.fn() }
     };
 
     const result = await run.handler(ctx, {}, { userId: 'user-123' });
@@ -160,7 +160,7 @@ describe('handleHello', () => {
       target: 'World'
     });
 
-    expect(ctx.output.info).toHaveBeenCalledWith(
+    expect(ctx.logger.info).toHaveBeenCalledWith(
       'Hello REST handler started',
       expect.objectContaining({ name: 'World' })
     );
@@ -449,7 +449,7 @@ describe('create-project integration', () => {
   it('should create project with all steps', async () => {
     const ctx = {
       logger: { info: vi.fn() },
-      output: { write: vi.fn() },
+      ui: { write: vi.fn() },
       runtime: {
         fs: {
           mkdir: vi.fn(),

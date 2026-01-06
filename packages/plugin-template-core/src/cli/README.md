@@ -40,7 +40,7 @@ export const run = defineCommand({
     const result = await yourBusinessLogic(flags.input);
 
     // 3. Output result
-    ctx.output?.write(`Result: ${result}\n`);
+    ctx.ui?.write(`Result: ${result}\n`);
 
     // 4. Return structured result
     return { ok: true, result };
@@ -79,7 +79,7 @@ cli: {
 ### ✅ DO
 
 - **Use `ctx.logger`** for logging (not `console.log`)
-- **Use `ctx.output`** for output (not `process.stdout`)
+- **Use `ctx.ui`** for formatted output (not `process.stdout`, see [Migration Guide](../../../docs/MIGRATION-ui-output.md))
 - **Delegate to `core/`** - keep CLI layer thin
 - **Type your flags** - use typed flag definitions
 - **Return structured results** - `{ ok: true, result: ... }`
@@ -139,9 +139,9 @@ export const run = defineCommand({
     const result = { message: 'Hello', count: 42 };
 
     if (flags.json) {
-      ctx.output?.json(result);
+      ctx.ui?.json(result);
     } else {
-      ctx.output?.write(`Message: ${result.message}\n`);
+      ctx.ui?.write(`Message: ${result.message}\n`);
     }
 
     return { ok: true, result };

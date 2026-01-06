@@ -60,9 +60,9 @@ export const run = defineCommand({
     ctx.tracker.checkpoint('complete');
     
     if (flags.json) {
-      ctx.output?.json(result);
+      ctx.ui?.json(result);
     } else {
-      ctx.output?.write(`${result}\n`);
+      ctx.ui?.write(`${result}\n`);
     }
     
     return { ok: true, result };
@@ -168,9 +168,9 @@ export async function runHelloCommand(
       
       // Handle output
       if (flags.json) {
-        ctx.output?.json(result);
+        ctx.ui?.json(result);
       } else {
-        ctx.output?.write(`${result}\n`);
+        ctx.ui?.write(`${result}\n`);
       }
       
       ctx.logger?.info('Command completed', {
@@ -259,9 +259,9 @@ export const run = defineCommand({
     const result = doSomething(flags.name, expensiveResult);
     
     if (flags.json) {
-      ctx.output?.json(result);
+      ctx.ui?.json(result);
     } else {
-      ctx.output?.write(`${result}\n`);
+      ctx.ui?.write(`${result}\n`);
     }
     
     return { ok: true, result };

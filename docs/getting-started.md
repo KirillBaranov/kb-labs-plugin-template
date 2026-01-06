@@ -93,7 +93,7 @@ export const run = defineCommand({
   },
   async handler(ctx, argv, flags) {
     ctx.logger?.info('Command started', { input: flags.input });
-    ctx.output?.write(`Processing: ${flags.input}\n`);
+    ctx.ui?.write(`Processing: ${flags.input}\n`);
     return { ok: true };
   }
 });

@@ -59,7 +59,7 @@ export const handleYourEndpoint = definePluginHandler<YourRequest, YourResponse>
   },
   async handle(input, ctx) {
     // 1. Log request
-    ctx.output?.info('Processing request', {
+    ctx.logger?.info('Processing request', {
       requestId: ctx.requestId,
       input: input.input
     });
@@ -136,7 +136,7 @@ describe('handleYourEndpoint', () => {
 
     expect(result.result).toBeDefined();
     expect(result.processedAt).toBeDefined();
-    expect(ctx.output.info).toHaveBeenCalled();
+    expect(ctx.logger.info).toHaveBeenCalled();
   });
 
   it('should validate input schema', async () => {
@@ -300,7 +300,7 @@ export const handler = definePluginHandler({
       return { result };
     } catch (error) {
       // Log full error with stack trace
-      ctx.output?.error('Operation failed', formatErrorForLogging(error));
+      ctx.logger?.error('Operation failed', formatErrorForLogging(error));
 
       // Rethrow for runtime to handle
       throw error;
@@ -316,7 +316,7 @@ export const handler = definePluginHandler({
 - **Use Zod schemas** for all request/response validation
 - **Export TypeScript types** from schemas with `z.infer`
 - **Keep handlers thin** - delegate to `core/` business logic
-- **Use ctx.output** for logging (not console.log)
+- **Use ctx.logger** for logging (not console.log, see [Migration Guide](./MIGRATION-ui-output.md))
 - **Validate permissions** - declare minimal fs/net/env access
 - **Write tests** - test both success and error cases
 - **Return structured data** - consistent response formats
@@ -325,7 +325,7 @@ export const handler = definePluginHandler({
 
 - Don't skip schema validation
 - Don't put business logic in handlers (use `core/`)
-- Don't use `console.log` (use `ctx.output`)
+- Don't use `console.log` (use `ctx.logger`)
 - Don't access filesystem without permissions
 - Don't expose internal errors to users (format them)
 - Don't use `any` types (use Zod inference)
@@ -421,7 +421,7 @@ export const handleSearch = definePluginHandler({
     const cached = await ctx.runtime?.state?.get(cacheKey);
 
     if (cached) {
-      ctx.output?.debug('Cache hit', { query: input.query });
+      ctx.logger?.debug('Cache hit', { query: input.query });
       return cached;
     }
 

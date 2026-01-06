@@ -1,3 +1,1 @@
-// Core business logic
-export * from './greeting';
-export * from './create-greeting';
+export { createGreeting, type Greeting } from './greeting';

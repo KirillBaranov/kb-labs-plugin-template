@@ -238,7 +238,7 @@ export const run = defineCommand({
 
     const result = await createProject(validated);
 
-    ctx.output?.write(`Project created: ${result.name}\n`);
+    ctx.ui?.write(`Project created: ${result.name}\n`);
 
     return { ok: true, project: result };
   }
@@ -261,7 +261,7 @@ export const handleCreateUser = definePluginHandler({
       if (error instanceof z.ZodError) {
         // This shouldn't happen (input is pre-validated)
         // But if manually parsing, handle Zod errors
-        ctx.output?.error('Validation failed', {
+        ctx.logger?.error('Validation failed', {
           errors: error.errors
         });
         throw new ValidationError(

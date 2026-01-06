@@ -18,4 +18,6 @@ export type { ApiContract, RestApiContract, RestRouteContract, SchemaReference }
 export type { ArtifactKind, ArtifactContractsMap, PluginArtifactContract, ArtifactExample } from './types/artifacts';
 export type { CommandContract, CommandContractsMap } from './types/commands';
 export type { WorkflowContract, WorkflowContractsMap, WorkflowStepContract } from './types/workflows';
+export type { PluginConfig, GreetingConfig, OutputConfig } from './types/config';
+export { defaultPluginConfig } from './types/config';
 
