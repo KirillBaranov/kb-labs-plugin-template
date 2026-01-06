@@ -1,15 +1,14 @@
 import { z } from 'zod';
-import { schema } from '@kb-labs/sdk/schema';
 
 export const HelloRequestSchema = z.object({
-  name: schema.text({ min: 1 }).optional().default('World'),
+  name: z.string().min(1).optional().default('World'),
 });
 
 export type HelloRequest = z.infer<typeof HelloRequestSchema>;
 
 export const HelloResponseSchema = z.object({
-  message: schema.text(),
-  target: schema.text(),
+  message: z.string(),
+  target: z.string(),
 });
 
 export type HelloResponse = z.infer<typeof HelloResponseSchema>;
