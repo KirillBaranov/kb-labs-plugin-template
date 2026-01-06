@@ -398,6 +398,121 @@ export const helloJob = defineJob({
 });
 ```
 
+## Enhanced UI Methods with MessageOptions (v3.x)
+
+Starting in v3.x, all UI methods (`success`, `info`, `warn`, `error`) support an optional second parameter for enhanced formatting with side-bordered boxes.
+
+### MessageOptions Interface
+
+```typescript
+export interface MessageOptions {
+  /** Optional title for the box (defaults to message type) */
+  title?: string;
+  /** Content sections to display in box */
+  sections?: OutputSection[];
+  /** Timing in milliseconds to display in footer */
+  timing?: number;
+}
+
+export interface OutputSection {
+  /** Section header (optional) */
+  header?: string;
+  /** List of items in this section */
+  items: string[];
+}
+```
+
+### Simple Usage (Backward Compatible)
+
+```typescript
+// Simple string output (still works)
+ctx.ui.success('Operation completed!');
+// Output: ✓ Operation completed!
+```
+
+### Enhanced Usage with Side-Bordered Box
+
+```typescript
+// Enhanced output with box
+ctx.ui.success('Operation completed!', {
+  title: 'Build Success',
+  sections: [
+    {
+      header: 'Summary',
+      items: [
+        'Files processed: 42',
+        'Time taken: 2.3s',
+      ],
+    },
+  ],
+  timing: 2300, // ms
+});
+```
+
+**Output:**
+```
+┌── Build Success
+│
+│ Summary
+│  Files processed: 42
+│  Time taken: 2.3s
+│
+└── OK Success / 2.3s
+```
+
+### Real-World Example
+
+```typescript
+import type { PluginContext } from '@kb-labs/plugin-contracts';
+
+export async function execute(ctx: PluginContext, input: unknown) {
+  const startTime = Date.now();
+
+  // ... your logic here ...
+
+  ctx.ui.success(`Deployed ${serviceName}`, {
+    title: 'Deployment',
+    sections: [
+      {
+        header: 'Details',
+        items: [
+          `Service: ${serviceName}`,
+          `Environment: ${env}`,
+          `Region: ${region}`,
+        ],
+      },
+      {
+        header: 'Resources',
+        items: [
+          `Functions: ${functions.length}`,
+          `Endpoints: ${endpoints.length}`,
+        ],
+      },
+    ],
+    timing: Date.now() - startTime,
+  });
+
+  return { exitCode: 0 };
+}
+```
+
+### Status Indicators
+
+The box footer displays status with color coding:
+- **Success**: Green "OK Success"
+- **Info**: Blue "INFO"
+- **Warning**: Yellow "WARN"
+- **Error**: Red "ERROR"
+
+Timing is automatically formatted:
+- `1200ms` → "1.2s"
+- `500ms` → "500ms"
+- `3600000ms` → "1h 0m"
+
+### Complete Documentation
+
+See [UI-API.md](../packages/plugin-contracts/UI-API.md) for complete API reference with more examples.
+
 ## Backward Compatibility
 
 `ctx.output` is still available but marked as `@deprecated`. It will continue to work in v2.x for backward compatibility but will be removed in v3.0.
@@ -420,6 +535,6 @@ export const helloJob = defineJob({
 
 ---
 
-**Last Updated**: 2025-12-04
-**Migration Status**: In Progress
-**Target Completion**: v2.1.0
+**Last Updated**: 2025-12-18
+**Migration Status**: Complete (v3.x)
+**Target Completion**: v3.0.0
