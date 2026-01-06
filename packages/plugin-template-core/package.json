@@ -12,6 +12,10 @@
       "types": "./dist/index.d.ts"
     },
     "./plugin-manifest": {
+      "import": "./dist/manifest.v3.js",
+      "types": "./dist/manifest.v3.d.ts"
+    },
+    "./plugin-manifest-v2": {
       "import": "./dist/manifest.v2.js",
       "types": "./dist/manifest.v2.d.ts"
     },
@@ -28,7 +32,7 @@
     "./dist/*": "./dist/*"
   },
   "kb": {
-    "manifest": "./dist/manifest.v2.js"
+    "manifest": "./dist/manifest.v3.js"
   },
   "files": [
     "dist",
