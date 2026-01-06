@@ -1,69 +1,68 @@
 /**
- * Test Loader Command - Demonstrates UI loader/spinner functionality
+ * Test Loader Command - V3 Migration
+ *
+ * Demonstrates UI loader/spinner functionality with V3 plugin architecture.
  *
  * Shows examples of:
  * - useLoader() hook - Spinner with start/stop/update/succeed/fail
  * - Single continuous loader - For quick tasks (loading, processing)
  * - Multi-stage progress - For complex operations with multiple steps
  * - Different scenarios: success, failure, rapid updates
+ *
+ * Key V3 changes:
+ * 1. Only dependency: @kb-labs/sdk
+ * 2. Handler is object with execute method
+ * 3. Input is single { argv, flags } object
+ * 4. Context is PluginContextV3
+ * 5. Returns { exitCode } instead of { ok }
  */
 
-import { defineCommand, useLoader, type CommandResult } from '@kb-labs/sdk';
-import { getCommandId } from '@kb-labs/plugin-template-contracts';
+import { defineCommand, useLoader, type PluginContextV3, type CommandResult } from '@kb-labs/sdk';
 
-export interface TestLoaderFlags {
+// V3: Define types inline (no external contracts)
+interface LoaderFlags {
   duration?: number;
   fail?: boolean;
   stages?: number;
 }
 
-const testLoaderFlags = {
-  duration: {
-    type: 'number',
-    description: 'Duration of each stage in milliseconds',
-    default: 2000,
-    alias: 'd',
-  },
-  fail: {
-    type: 'boolean',
-    description: 'Simulate failure scenario',
-    default: false,
-    alias: 'f',
-  },
-  stages: {
-    type: 'number',
-    description: 'Number of progress stages to simulate',
-    default: 3,
-    alias: 's',
-  },
-} as const;
+interface LoaderInput {
+  argv: string[];
+  flags: LoaderFlags;
+}
 
-type TestLoaderResult = CommandResult & {
-  result?: {
-    completed: boolean;
-    stagesRun: number;
-  };
-};
+interface LoaderResult {
+  completed: boolean;
+  stagesRun: number;
+}
 
-export const runTestLoader = defineCommand<typeof testLoaderFlags, TestLoaderResult>({
-  name: getCommandId('plugin-template:test-loader'),
-  flags: testLoaderFlags,
+export default defineCommand<unknown, LoaderInput, LoaderResult>({
+  id: 'plugin-template:test-loader',
+  description: 'Test UI loader/spinner functionality with various scenarios',
 
-  async handler(ctx: any, argv: string[], flags: any) {
+  handler: {
+    async execute(
+      ctx: PluginContextV3<unknown>,
+      input: LoaderInput
+    ): Promise<CommandResult<LoaderResult>> {
+      const flags = input.flags;
     const duration = flags.duration ?? 2000;
     const shouldFail = flags.fail ?? false;
     const stagesCount = flags.stages ?? 3;
 
-    ctx.ui?.info('🧪 Testing Loader/Spinner functionality', {
-      summary: {
-        'Duration per stage': `${duration}ms`,
-        'Stages': stagesCount,
-        'Fail scenario': shouldFail ? 'yes' : 'no',
-      },
+    ctx.ui?.info('', {
+      title: '🧪 Testing Loader/Spinner functionality',
+      sections: [{
+        items: [
+          `Duration per stage: ${duration}ms`,
+          `Stages: ${stagesCount}`,
+          `Fail scenario: ${shouldFail ? 'yes' : 'no'}`,
+        ]
+      }]
     });
 
     // ===== 1. Single Continuous Loader (no stages) =====
-    ctx.ui?.headline('1. Single Continuous Loader (ideal for quick tasks)');
+    ctx.ui.info('\n1. Single Continuous Loader (ideal for quick tasks)');
 
     const loader = useLoader('Loading data...');
     loader.start();
@@ -84,7 +83,7 @@ export const runTestLoader = defineCommand<typeof testLoaderFlags, TestLoaderRes
     await sleep(500);
 
     // ===== 2. Multi-Stage Progress Test =====
-    ctx.ui?.headline('2. Multi-Stage Progress (for complex operations)');
+    ctx.ui.info('\n2. Multi-Stage Progress (for complex operations)');
 
     for (let i = 1; i <= stagesCount; i++) {
       const spinner = useLoader(`Stage ${i}/${stagesCount}: Starting...`);
@@ -118,35 +117,14 @@ export const runTestLoader = defineCommand<typeof testLoaderFlags, TestLoaderRes
       stagesRun: shouldFail ? Math.floor(stagesCount / 2) : stagesCount,
     };
 
-    ctx.ui?.success('Loader Test Complete', {
-      summary: {
-        'Status': result.completed ? 'Success' : 'Failed (simulated)',
-        'Stages completed': `${result.stagesRun}/${stagesCount}`,
-      },
-      sections: [
-        {
-          header: 'Test Coverage',
-          items: [
-            `${ctx.ui.symbols.success} Single continuous loader (reactive updates)`,
-            `${ctx.ui.symbols.success} Multi-stage progress (complex operations)`,
-            `${ctx.ui.symbols.success} Success/Failure scenarios`,
-          ],
-        },
-      ],
-    });
+    // Final summary
+    ctx.ui.success(`\nLoader Test Complete - ${result.completed ? 'Success' : 'Failed'}`);
 
-    return { ok: true, result };
-  },
+      return { exitCode: 0, result };
+    }
+  }
 });
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-export async function runTestLoaderCommand(
-  ctx: Parameters<typeof runTestLoader>[0],
-  argv: Parameters<typeof runTestLoader>[1],
-  flags: Parameters<typeof runTestLoader>[2]
-) {
-  return runTestLoader(ctx, argv, flags);
 }
