@@ -14,12 +14,6 @@
       ],
       "@kb-labs/plugin-template-contracts/*": [
         "packages/plugin-template-contracts/src/*"
-      ],
-      "@kb-labs/sdk": [
-        "../kb-labs-sdk/packages/sdk/src/index.ts"
-      ],
-      "@kb-labs/sdk/*": [
-        "../kb-labs-sdk/packages/sdk/src/*"
       ]
     }
   }

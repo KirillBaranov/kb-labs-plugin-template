@@ -69,18 +69,12 @@ importers:
 
   packages/plugin-template-core:
     dependencies:
-      '@kb-labs/plugin-contracts-v3':
-        specifier: link:../../../kb-labs-plugin/packages/plugin-contracts-v3
-        version: link:../../../kb-labs-plugin/packages/plugin-contracts-v3
       '@kb-labs/plugin-template-contracts':
         specifier: link:../plugin-template-contracts
         version: link:../plugin-template-contracts
       '@kb-labs/sdk':
         specifier: link:../../../kb-labs-sdk/packages/sdk
         version: link:../../../kb-labs-sdk/packages/sdk
-      '@kb-labs/sdk-v3':
-        specifier: link:../../../kb-labs-sdk/packages/sdk-v3
-        version: link:../../../kb-labs-sdk/packages/sdk-v3
       react:
         specifier: ^18.3.1
         version: 18.3.1
