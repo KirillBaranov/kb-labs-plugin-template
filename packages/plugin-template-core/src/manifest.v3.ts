@@ -4,7 +4,7 @@
  * Demonstrates V3 plugin architecture with migrated hello command.
  */
 
-import { defineManifest, defineCommandFlags, combinePermissions, generateExamples } from '@kb-labs/sdk';
+import { defineCommandFlags, combinePermissions, generateExamples } from '@kb-labs/sdk';
 
 /**
  * Build permissions using V3 combinePermissions builder pattern.
@@ -43,15 +43,17 @@ const loaderPermissions = combinePermissions()
   })
   .build();
 
-export const manifest = defineManifest({
-  schema: 'kb.plugin/3',  // V3 schema
+export const manifest = {
+  schema: 'kb.plugin/3',
   id: '@kb-labs/plugin-template',
   version: '0.1.0',
+
   display: {
     name: 'Plugin Template (V3)',
     description: 'V3 reference plugin demonstrating new plugin architecture.',
-    tags: ['template', 'hello', 'v3', 'sample']
+    tags: ['template', 'hello', 'v3', 'sample'],
   },
+
   cli: {
     commands: [
       {
@@ -59,6 +61,10 @@ export const manifest = defineManifest({
         group: 'plugin-template',
         describe: 'Print a hello message (V3 migrated)',
         longDescription: 'V3 version with improved UI, timing tracking, and structured output.',
+
+        handler: './cli/commands/hello.js#default',
+        handlerPath: './cli/commands/hello.js',
+
         flags: defineCommandFlags({
           name: {
             type: 'string',
@@ -72,13 +78,13 @@ export const manifest = defineManifest({
             default: false,
           },
         }),
+
         examples: generateExamples('hello', 'plugin-template', [
           { description: 'Basic greeting', flags: {} },
           { description: 'Greet specific name', flags: { name: 'Developer' } },
-          { description: 'Output as JSON', flags: { json: true } }
+          { description: 'Output as JSON', flags: { json: true } },
         ]),
-        handler: './cli/commands/hello.js#default',
-        handlerPath: './cli/commands/hello.js',
+
         permissions: helloPermissions,
       },
       {
@@ -86,6 +92,10 @@ export const manifest = defineManifest({
         group: 'plugin-template',
         describe: 'Test UI loader/spinner functionality (V3 migrated)',
         longDescription: 'Demonstrates spinner, multi-stage progress, and rapid updates for testing UI loader components.',
+
+        handler: './cli/commands/test-loader.js#default',
+        handlerPath: './cli/commands/test-loader.js',
+
         flags: defineCommandFlags({
           duration: {
             type: 'number',
@@ -106,19 +116,20 @@ export const manifest = defineManifest({
             alias: 's',
           },
         }),
+
         examples: generateExamples('test-loader', 'plugin-template', [
           { description: 'Basic loader test (3 stages, 2s each)', flags: {} },
           { description: 'Fast test (1s per stage)', flags: { duration: 1000 } },
           { description: 'Simulate failure', flags: { fail: true } },
-          { description: 'Many stages', flags: { stages: 5, duration: 1000 } }
+          { description: 'Many stages', flags: { stages: 5, duration: 1000 } },
         ]),
-        handler: './cli/commands/test-loader.js#default',
-        handlerPath: './cli/commands/test-loader.js',
+
         permissions: loaderPermissions,
-      }
-    ]
+      },
+    ],
   },
-  permissions: pluginPermissions
-});
+
+  permissions: pluginPermissions,
+};
 
 export default manifest;
