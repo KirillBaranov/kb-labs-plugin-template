@@ -5,5 +5,4 @@ export * from './cli';
 export * from './rest';
 export * from './core';
 export * from './utils';
-export * from './studio';
 // export * from './lifecycle'; // TODO: Lifecycle SDK not available yet
