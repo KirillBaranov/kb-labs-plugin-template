@@ -1,6 +1,8 @@
 import type { PluginContracts } from './types';
 import { contractsSchemaId, contractsVersion } from './version';
 
+/* eslint-disable sonarjs/no-duplicate-string -- Artifact definitions intentionally use repeated ID patterns (template.hello.*) */
+
 // Level 2: Contracts типизация с as const для извлечения типов
 export const pluginContractsManifest = {
   schema: contractsSchemaId,

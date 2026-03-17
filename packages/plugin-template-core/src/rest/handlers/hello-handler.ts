@@ -1,8 +1,7 @@
 import { getArtifactId } from '@kb-labs/plugin-template-contracts';
 import { defineHandler, type PluginContextV3 } from '@kb-labs/sdk';
 import { createGreeting } from '../../core/greeting';
-import type { HelloRequest, HelloResponse } from '../schemas/hello-schema';
-import { HelloRequestSchema, HelloResponseSchema } from '../schemas/hello-schema';
+import type { HelloRequest } from '../schemas/hello-schema';
 
 const HELLO_GREETING_ARTIFACT_ID = getArtifactId('template.hello.greeting');
 

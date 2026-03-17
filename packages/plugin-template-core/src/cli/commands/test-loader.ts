@@ -8,6 +8,11 @@
  * - Single continuous loader - For quick tasks (loading, processing)
  * - Multi-stage progress - For complex operations with multiple steps
  * - Different scenarios: success, failure, rapid updates
+ */
+
+/* eslint-disable no-await-in-loop -- Sequential delays required for UI demonstration */
+
+/**
  *
  * Key V3 changes:
  * 1. Only dependency: @kb-labs/sdk
